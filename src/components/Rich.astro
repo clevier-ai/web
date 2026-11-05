@@ -1,0 +1,21 @@
+---
+import { linked } from "../i18n/ui";
+
+interface Props {
+  text: string;
+}
+
+const parts = linked(Astro.props.text);
+---
+
+{
+  parts.map((part) =>
+    part.kind === "mail" ? (
+      <a href="mailto:hola@clevier.ai">hola@clevier.ai</a>
+    ) : part.kind === "aepd" ? (
+      <a href="https://www.aepd.es" rel="noopener noreferrer">aepd.es</a>
+    ) : (
+      part.text
+    ),
+  )
+}

@@ -1,0 +1,17 @@
+---
+import Home from "../../components/Home.astro";
+import { isLang, langs, type Lang } from "../../i18n/ui";
+
+export function getStaticPaths() {
+  return langs
+    .filter((lang) => lang !== "es")
+    .map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang;
+if (!isLang(lang) || lang === "es") {
+  throw new Error(`Unexpected lang: ${lang}`);
+}
+---
+
+<Home lang={lang as Lang} />

@@ -1,0 +1,20 @@
+---
+import Legal from "../components/Legal.astro";
+import { routes, type LegalId } from "../i18n/ui";
+
+export function getStaticPaths() {
+  const kinds = ["notice", "privacy", "cookies"] as const;
+  return kinds.map((kind) => ({
+    params: { slug: routes.es[kind].slice(1) },
+    props: { kind },
+  }));
+}
+
+interface Props {
+  kind: LegalId;
+}
+
+const { kind } = Astro.props;
+---
+
+<Legal lang="es" kind={kind} />

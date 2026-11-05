@@ -1,0 +1,218 @@
+---
+import LinkedInLink from "./LinkedInLink.astro";
+import { copy, langs, routes, type Lang, type PageId } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+  page: PageId;
+}
+
+const { lang, page } = Astro.props;
+const t = copy[lang];
+const year = new Date().getFullYear();
+const legal = (["notice", "privacy", "cookies"] as const).map((id) => ({
+  id,
+  href: routes[lang][id],
+  label: t.legalNav[id],
+}));
+const hintOptions = langs.map((code) => ({
+  code,
+  href: routes[code][page],
+  label: copy[code].hintCta,
+}));
+---
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="hint" data-hint data-current={lang} data-options={JSON.stringify(hintOptions)} hidden>
+      <a class="enlace" data-hint-link href={routes[lang].home}></a>
+      <button class="hint__close" type="button" data-hint-close aria-label={t.close}>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M6 6l12 12M18 6L6 18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="footlinks">
+      <nav class="langs" aria-label={t.languages}>
+        {
+          langs.map((code) =>
+            code === lang ? (
+              <span lang={code} aria-current="page">
+                {code.toUpperCase()}
+              </span>
+            ) : (
+              <a class="enlace" href={routes[code][page]} hreflang={code} lang={code}>
+                {code.toUpperCase()}
+              </a>
+            ),
+          )
+        }
+      </nav>
+      <LinkedInLink label={t.linkedin} text />
+    </div>
+    <nav class="legal" aria-label={t.legalLabel}>
+      {
+        legal.map((item) => (
+          <a class="enlace" href={item.href} aria-current={page === item.id ? "page" : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+    <p class="copy">© {year} Clevier</p>
+  </div>
+</footer>
+
+<script>
+  const hint = document.querySelector("[data-hint]");
+
+  if (hint instanceof HTMLElement) {
+    hint.querySelector("[data-hint-close]")?.addEventListener("click", () => {
+      hint.hidden = true;
+      try {
+        sessionStorage.setItem("clv-lang-hint", "1");
+      } catch {
+        /* ignore */
+      }
+    });
+
+    let dismissed = false;
+    try {
+      dismissed = sessionStorage.getItem("clv-lang-hint") === "1";
+    } catch {
+      dismissed = true;
+    }
+
+    if (!dismissed) {
+      const code = navigator.language.toLowerCase().slice(0, 2);
+      let options: { code: string; href: string; label: string }[] = [];
+      try {
+        options = JSON.parse(hint.dataset.options || "[]");
+      } catch {
+        options = [];
+      }
+      const match = options.find((item) => item.code === code);
+      const link = hint.querySelector("[data-hint-link]");
+      if (match && match.code !== hint.dataset.current && link instanceof HTMLAnchorElement) {
+        link.href = match.href;
+        link.textContent = match.label;
+        link.lang = match.code;
+        link.hreflang = match.code;
+        hint.hidden = false;
+      }
+    }
+  }
+</script>
+
+<style>
+  .footer {
+    padding-block: 28px 48px;
+    border-top: 1px solid var(--clv-border);
+  }
+
+  .footer__inner {
+    display: grid;
+    gap: 4px;
+  }
+
+  .hint {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 44px;
+  }
+
+  .hint[hidden] {
+    display: none;
+  }
+
+  .hint a {
+    font: 600 14px/1.4 var(--clv-font-body);
+  }
+
+  .hint__close {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    flex: none;
+  }
+
+  .hint__close svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .footlinks {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 20px;
+    margin-top: 8px;
+  }
+
+  .langs {
+    display: flex;
+    align-items: center;
+  }
+
+  .langs a,
+  .langs span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 8px;
+    color: var(--clv-text-secondary);
+    font: var(--clv-text-label);
+    letter-spacing: 0.06em;
+  }
+
+  .langs a:hover,
+  .langs [aria-current="page"] {
+    color: var(--clv-text);
+  }
+
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    margin-top: 8px;
+  }
+
+  .legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--clv-text-secondary);
+    font: var(--clv-text-small);
+  }
+
+  .legal a:hover,
+  .legal a[aria-current="page"] {
+    color: var(--clv-text);
+  }
+
+  .legal a[aria-current="page"] {
+    text-decoration-color: currentColor;
+  }
+
+  .copy {
+    color: var(--clv-text-secondary);
+    font: var(--clv-text-small);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .langs a,
+    .legal a,
+    .hint a {
+      transition: none;
+    }
+  }
+</style>

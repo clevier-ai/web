@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://clevier.ai/sitemap-index.xml

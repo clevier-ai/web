@@ -1,0 +1,63 @@
+/* Clevier · Tokens
+   Un solo tema: papel #FAFAF8, tinta #1F2328.
+   Lima #C8F169 en el texto del botón y en la segunda línea del titular. */
+:root {
+  --clv-grafit: #1f2328;
+  --clv-verd: #2fbf71;
+  --clv-llima: #c8f169;
+  --clv-paper: #fafaf8;
+  --clv-boira: #e6e8e6;
+  --clv-pedra: #4a5057;
+  --clv-nit: #14171a;
+  --clv-blanc: #ffffff;
+  --clv-exit: #2fbf71;
+  --clv-error: #c83c3c;
+  --clv-avis: #e8a33d;
+  --clv-bg: #fafaf8;
+  --clv-surface: #ffffff;
+  --clv-border: #e6e8e6;
+  --clv-text: #1f2328;
+  --clv-text-secondary: #4a5057;
+  --clv-accent: #2fbf71;
+  --clv-cta-bg: #1f2328;
+  --clv-cta-text: #c8f169;
+  --clv-cta-hover: #343a40;
+  --clv-font-display: "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --clv-font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --clv-font-mono: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --clv-text-display: 700 clamp(3.25rem, 1rem + 5.2vw, 6.25rem) / 0.96 var(--clv-font-display);
+  --clv-text-h1: 700 clamp(2.25rem, 1.2rem + 2vw, 3.25rem) / 1.02 var(--clv-font-display);
+  --clv-text-h2: 600 clamp(1.7rem, 1.15rem + 1.6vw, 2.5rem) / 1.08 var(--clv-font-display);
+  --clv-text-h3: 600 1.35rem / 1.2 var(--clv-font-display);
+  --clv-text-body: 400 18px/1.5 var(--clv-font-body);
+  --clv-text-small: 400 15px/1.45 var(--clv-font-body);
+  --clv-text-label: 400 12px/1.35 var(--clv-font-mono);
+  --clv-tracking-tight: -0.03em;
+  --clv-space-1: 4px;
+  --clv-space-2: 8px;
+  --clv-space-3: 12px;
+  --clv-space-4: 16px;
+  --clv-space-5: 24px;
+  --clv-space-6: 32px;
+  --clv-space-7: 48px;
+  --clv-space-8: 64px;
+  --clv-space-9: 96px;
+  --clv-radius: 12px;
+  --clv-radius-sm: 4px;
+  --clv-radius-md: 4px;
+  --clv-radius-lg: 4px;
+  --clv-radius-pill: 999px;
+  --clv-max-width: 1120px;
+  --clv-gutter: 24px;
+  --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-standard: var(--ease-std);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-1: 140ms;
+  --dur-color: var(--dur-1);
+  --dur-2: 220ms;
+  --dur-overlay: var(--dur-2);
+  --dur-3: 480ms;
+  --dur-enter: var(--dur-3);
+}
+
+html { color-scheme: light; }

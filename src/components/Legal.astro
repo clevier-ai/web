@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Rich from "./Rich.astro";
+import { copy, type Lang, type LegalId } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+  kind: LegalId;
+}
+
+const { lang, kind } = Astro.props;
+const doc = copy[lang].legal[kind];
+---
+
+<BaseLayout lang={lang} page={kind} title={doc.title} description={doc.description}>
+  <article class="legal wrap">
+    <h1>{doc.title.replace(/ — Clevier$/, "")}</h1>
+    <p class="updated">{doc.updated}</p>
+    {
+      doc.blocks.map((block) =>
+        "h" in block ? (
+          <h2>{block.h}</h2>
+        ) : "p" in block ? (
+          <p>
+            <Rich text={block.p} />
+          </p>
+        ) : (
+          <dl>
+            {block.rows.map((row) => (
+              <div>
+                <dt>{row.dt}</dt>
+                <dd>
+                  <Rich text={row.dd} />
+                </dd>
+              </div>
+            ))}
+          </dl>
+        ),
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: 40px 64px;
+  }
+
+  h1 {
+    max-width: 16ch;
+    font-size: clamp(2.4rem, 1.4rem + 2.4vw, 3.5rem);
+    line-height: 1.02;
+  }
+
+  .updated {
+    margin-top: 14px;
+    color: var(--clv-text-secondary);
+    font: var(--clv-text-label);
+  }
+
+  h2 {
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  p {
+    margin-top: 12px;
+    max-width: 62ch;
+  }
+
+  a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
+
+  dl {
+    margin-top: 8px;
+    max-width: 40rem;
+  }
+
+  dl div {
+    display: grid;
+    grid-template-columns: minmax(8.5rem, 12rem) minmax(0, 1fr);
+    gap: 4px 16px;
+    padding-block: 12px;
+    border-top: 1px solid var(--clv-border);
+  }
+
+  dl div:last-child {
+    border-bottom: 1px solid var(--clv-border);
+  }
+
+  dt {
+    color: var(--clv-text-secondary);
+  }
+
+  @media (max-width: 560px) {
+    dl div {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+
+  @media (min-width: 720px) {
+    .legal {
+      padding-block: 64px 80px;
+    }
+  }
+</style>

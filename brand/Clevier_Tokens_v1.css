@@ -1,0 +1,78 @@
+/* Clevier · Tokens de disseny v1 (octubre 2026)
+   Fonts: Google Fonts (OFL) — Sora 600/700, Figtree 400/600/700, JetBrains Mono 400
+   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Figtree:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+   Colors funcionals (error, avís): PROVISIONALS, pendents de validar. */
+:root {
+  /* Marca */
+  --clv-grafit: #1F2328;
+  --clv-verd: #2FBF71;
+  --clv-llima: #C8F169;
+  /* Neutres */
+  --clv-paper: #FAFAF8;
+  --clv-boira: #E6E8E6;
+  --clv-pedra: #4A5057;
+  --clv-nit: #14171A;
+  --clv-blanc: #FFFFFF;
+  /* Funcionals */
+  --clv-exit: #2FBF71;
+  --clv-error: #C83C3C;
+  --clv-avis: #E8A33D;
+  /* Rols (mode clar per defecte) */
+  --clv-bg: #FAFAF8;
+  --clv-surface: #FFFFFF;
+  --clv-border: #E6E8E6;
+  --clv-text: #1F2328;
+  --clv-text-secondary: #4A5057;
+  --clv-accent: #2FBF71;
+  --clv-cta-bg: #1F2328;
+  --clv-cta-text: #C8F169;
+
+  /* Tipografia */
+  --clv-font-display: 'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --clv-font-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --clv-font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --clv-text-display: 700 48px/56px var(--clv-font-display);
+  --clv-text-h1: 700 36px/44px var(--clv-font-display);
+  --clv-text-h2: 700 28px/36px var(--clv-font-display);
+  --clv-text-h3: 600 20px/28px var(--clv-font-display);
+  --clv-text-body: 400 16px/26px var(--clv-font-body);
+  --clv-text-small: 400 14px/22px var(--clv-font-body);
+  --clv-text-label: 400 12px/16px var(--clv-font-mono);
+  --clv-tracking-tight: -0.02em;
+
+  /* Espaiat (base 4) */
+  --clv-space-1: 4px;
+  --clv-space-2: 8px;
+  --clv-space-3: 12px;
+  --clv-space-4: 16px;
+  --clv-space-5: 24px;
+  --clv-space-6: 32px;
+  --clv-space-7: 48px;
+  --clv-space-8: 64px;
+  --clv-space-9: 96px;
+
+  /* Radis */
+  --clv-radius-sm: 4px;
+  --clv-radius-md: 8px;
+  --clv-radius-lg: 12px;
+  --clv-radius-pill: 999px;
+
+  /* Layout */
+  --clv-max-width: 1120px;
+  --clv-gutter: 24px;
+}
+
+/* Mode fosc: seccions puntuals (.clv-dark) o preferència del sistema a les apps */
+.clv-dark {
+  --clv-bg: #14171A;
+  --clv-surface: #1F2328;
+  --clv-border: #2E3339;
+  --clv-text: #FAFAF8;
+  --clv-text-secondary: #B7BCC2;
+  --clv-accent: #2FBF71;
+  --clv-cta-bg: #C8F169;
+  --clv-cta-text: #1F2328;
+}
+
+/* Co-branding a apps de client: substituir només l'accent pel color del client */
+/* .app-client { --clv-accent: #XXXXXX; }  (validar contrast AA abans d'usar-lo en text) */

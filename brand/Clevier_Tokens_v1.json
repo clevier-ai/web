@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "brand": "Clevier",
+    "version": "1.0",
+    "date": "2026-10",
+    "note": "Colors funcionals (error, avís) provisionals"
+  },
+  "color": {
+    "brand": {
+      "grafit": "#1F2328",
+      "verd": "#2FBF71",
+      "llima": "#C8F169"
+    },
+    "neutral": {
+      "paper": "#FAFAF8",
+      "boira": "#E6E8E6",
+      "pedra": "#4A5057",
+      "nit": "#14171A",
+      "blanc": "#FFFFFF"
+    },
+    "functional": {
+      "exit": "#2FBF71",
+      "error": "#C83C3C",
+      "avis": "#E8A33D"
+    },
+    "light": {
+      "bg": "#FAFAF8",
+      "surface": "#FFFFFF",
+      "border": "#E6E8E6",
+      "text": "#1F2328",
+      "text-secondary": "#4A5057",
+      "accent": "#2FBF71",
+      "cta-bg": "#1F2328",
+      "cta-text": "#C8F169"
+    },
+    "dark": {
+      "bg": "#14171A",
+      "surface": "#1F2328",
+      "border": "#2E3339",
+      "text": "#FAFAF8",
+      "text-secondary": "#B7BCC2",
+      "accent": "#2FBF71",
+      "cta-bg": "#C8F169",
+      "cta-text": "#1F2328"
+    }
+  },
+  "font": {
+    "family": {
+      "display": "'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif",
+      "body": "'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif",
+      "mono": "'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace"
+    },
+    "weight": {
+      "regular": 400,
+      "semibold": 600,
+      "bold": 700
+    },
+    "scale": {
+      "display": {
+        "size": "48px",
+        "line": "56px",
+        "family": "display",
+        "weight": 700,
+        "tracking": "-0.02em"
+      },
+      "h1": {
+        "size": "36px",
+        "line": "44px",
+        "family": "display",
+        "weight": 700,
+        "tracking": "-0.02em"
+      },
+      "h2": {
+        "size": "28px",
+        "line": "36px",
+        "family": "display",
+        "weight": 700,
+        "tracking": "-0.01em"
+      },
+      "h3": {
+        "size": "20px",
+        "line": "28px",
+        "family": "display",
+        "weight": 600,
+        "tracking": "0"
+      },
+      "body": {
+        "size": "16px",
+        "line": "26px",
+        "family": "body",
+        "weight": 400
+      },
+      "small": {
+        "size": "14px",
+        "line": "22px",
+        "family": "body",
+        "weight": 400
+      },
+      "label": {
+        "size": "12px",
+        "line": "16px",
+        "family": "mono",
+        "weight": 400
+      }
+    }
+  },
+  "space": {
+    "1": "4px",
+    "2": "8px",
+    "3": "12px",
+    "4": "16px",
+    "5": "24px",
+    "6": "32px",
+    "7": "48px",
+    "8": "64px",
+    "9": "96px"
+  },
+  "radius": {
+    "sm": "4px",
+    "md": "8px",
+    "lg": "12px",
+    "pill": "999px"
+  },
+  "border": {
+    "width": "1px"
+  },
+  "icon": {
+    "library": "Lucide",
+    "stroke": "2px",
+    "sizes": [
+      "16px",
+      "20px",
+      "24px"
+    ]
+  },
+  "layout": {
+    "max-width": "1120px",
+    "gutter": "24px"
+  }
+}

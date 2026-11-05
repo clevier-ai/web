@@ -1,0 +1,80 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { copy, ogLocales, routes, type Lang, type PageId } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+  page: PageId;
+  title: string;
+  description: string;
+}
+
+const { lang, page, title, description } = Astro.props;
+const t = copy[lang];
+const site = Astro.site ?? new URL("https://clevier.ai");
+const canonical = new URL(routes[lang][page], site).href;
+const ogImage = new URL(lang === "ca" ? "/og-ca.png" : "/og.png", site).href;
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Clevier",
+  url: site.href,
+  email: "hola@clevier.ai",
+  image: ogImage,
+  description: t.metaDescription,
+  sameAs: ["https://www.linkedin.com/company/clevier"],
+  knowsLanguage: ["ca", "es"],
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta id="theme-color" name="theme-color" content="#FAFAF8" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={ogLocales[lang]} />
+    <meta property="og:site_name" content="Clevier" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {
+      (Object.keys(routes) as Lang[])
+        .filter((code) => code !== lang)
+        .map((code) => <meta property="og:locale:alternate" content={ogLocales[code]} />)
+    }
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {
+      (Object.entries(routes) as [Lang, (typeof routes)[Lang]][]).map(([code, path]) => (
+        <link rel="alternate" hreflang={code} href={new URL(path[page], site).href} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={new URL(routes.es[page], site).href} />
+    <style is:inline>
+      html { background: #fafaf8; color-scheme: light; }
+    </style>
+  </head>
+  <body>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(organization)} />
+    <a class="skip" href="#contenido">{t.skip}</a>
+    <Header lang={lang} page={page} />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer lang={lang} page={page} />
+  </body>
+</html>
