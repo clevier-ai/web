@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { copy, surveyHref, type Lang } from "../i18n/ui";
+import { copy, type Lang } from "../i18n/ui";
 import logoPrimerCanal from "../assets/clients/primercanal.png";
 import logoMetalografica from "../assets/clients/metalografica.png";
 import logoCocoHomes from "../assets/clients/coco-homes.png";
@@ -14,9 +14,6 @@ interface Props {
 const { lang } = Astro.props;
 const t = copy[lang];
 const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)}&body=${encodeURIComponent(t.mailBody)}`;
-const cut = t.lede.indexOf(". ");
-const ledeMain = cut === -1 ? t.lede : t.lede.slice(0, cut + 1);
-const ledeMargin = cut === -1 ? "" : t.lede.slice(cut + 2);
 
 const clients = [
   { name: "Primer Canal", href: "https://primercanal.com/", logo: logoPrimerCanal },
@@ -31,12 +28,12 @@ const clients = [
   <div class="page">
     <section class="cartel">
       <div class="wrap cartel__grid">
-        {ledeMargin && <p class="margen">{ledeMargin}</p>}
         <h1>
           <span>{t.claim[0]}</span>
-          <span class="marca">{t.claim[1]}</span>
+          <span>{t.claim[1]}</span>
         </h1>
-        <p class="lede">{ledeMain}</p>
+        <p class="lede">{t.lede}</p>
+        <p class="hecho">{t.proof}</p>
         <div class="acciones">
           <a class="btn" href="#contacto">{t.cta}</a>
           <a class="salto" href="#como">{t.howLabel}</a>
@@ -52,10 +49,20 @@ const clients = [
             t.steps.map((step, index) => (
               <li>
                 <span class="num">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <h3>{step.title}</h3>
-                  <p>{step.detail}</p>
-                </div>
+                <details class="abre">
+                  <summary>
+                    <div>
+                      <h3>{step.title}</h3>
+                      <p>{step.detail}</p>
+                    </div>
+                    <span class="abre__mas" aria-hidden="true">
+                      <span class="abre__icon"></span>
+                    </span>
+                  </summary>
+                  <div class="abre__cuerpo">
+                    <p>{step.extra}</p>
+                  </div>
+                </details>
               </li>
             ))
           }
@@ -65,55 +72,21 @@ const clients = [
 
     <section class="bloque" id="trabajo" aria-labelledby="work-title">
       <div class="wrap">
-        <h2 id="work-title">{t.workLine}</h2>
-        <ol class="filas filas--trabajo">
+        <h2 id="work-title">{t.workTitle}</h2>
+        <p class="intro">{t.workLine}</p>
+        <ul class="filas filas--resto">
           {
-            t.services.map((service, index) => (
-              <li id={service.id} class={index === 0 ? "is-activa" : undefined}>
-                <span class="num">{String(index + 1).padStart(2, "0")}</span>
+            t.services.map((service) => (
+              <li id={service.id}>
                 <div>
                   <h3>{service.name}</h3>
                   <p>{service.more}</p>
-                  <p>{service.detail}</p>
                 </div>
                 <p class="meta">{service.meta}</p>
               </li>
             ))
           }
-        </ol>
-      </div>
-    </section>
-
-    <section class="bloque" aria-labelledby="prepare-title">
-      <div class="wrap">
-        <h2 id="prepare-title">{t.prepareTitle}</h2>
-        <p class="intro">{t.prepareIntro}</p>
-        <ul class="listo">
-          {
-            t.prepare.map((item) => (
-              <li>
-                <span>{item.k}</span>
-                {item.v}
-              </li>
-            ))
-          }
         </ul>
-      </div>
-    </section>
-
-    <section class="bloque" aria-labelledby="dato">
-      <div class="wrap">
-        <h2 id="dato" class="sr-only">{t.surveyLabel}</h2>
-        <p class="prueba">
-          {
-            t.survey.split(/(\d[\d\s.,]*\s?%)/g).map((part) =>
-              /^\d/.test(part) ? <strong class="cifra">{part}</strong> : part,
-            )
-          }
-        </p>
-        <p class="fuente">
-          <a class="enlace" href={surveyHref} target="_blank" rel="noopener noreferrer">{t.surveySource}</a>
-        </p>
       </div>
     </section>
 
@@ -146,142 +119,61 @@ const clients = [
         <h2 id="contact-title">
           <a class="mail enlace" href={mail}>hola@clevier.ai</a>
         </h2>
+        <p class="cierre__linea">{t.contactAfter}</p>
+        <p class="cierre__linea">{t.contactNeed}</p>
       </div>
     </section>
   </div>
 </BaseLayout>
 
-<script>
-  let stopTrabajo = () => {};
-
-  function bindTrabajo() {
-    stopTrabajo();
-    const list = document.querySelector(".filas--trabajo");
-    if (!(list instanceof HTMLOListElement)) {
-      stopTrabajo = () => {};
-      return;
-    }
-
-    const items = [...list.querySelectorAll(":scope > li")];
-    if (!items.length) return;
-
-    const setActive = (index) => {
-      items.forEach((item, i) => item.classList.toggle("is-activa", i === index));
-    };
-
-    let frame = 0;
-    const update = () => {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        if (!list.isConnected) return;
-        const line = Math.max(128, window.innerHeight * 0.36);
-        const bounds = list.getBoundingClientRect();
-        if (bounds.bottom < line) {
-          setActive(items.length - 1);
-          return;
-        }
-        let current = 0;
-        for (let i = 0; i < items.length; i++) {
-          if (items[i].getBoundingClientRect().top <= line) current = i;
-        }
-        setActive(current);
-      });
-    };
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    stopTrabajo = () => {
-      if (frame) cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }
-
-  bindTrabajo();
-  document.addEventListener("astro:page-load", bindTrabajo);
-</script>
-
 <style>
   /* Dirección — inicio de Clevier
-     Para quién: quien dirige una pyme y abre la web un martes, comparando a quién encargar la IA
-     Sensación: papel al mediodía, con luz de lima cogida en el cristal
-     Idea: cartel subrayado; el cristal líquido es la barra, la fila activa y la placa de logos
-     Tipo: Sora 700 a unas 4,5× Figtree 18px
-     Color: papel #FAFAF8, tinta #1F2328; lima #C8F169 en la segunda línea y en el texto del botón
-     Detalle: «El precio se cierra antes» en el margen, a la altura de la primera línea
-     Rechazos: noche en toda la página, malla violeta, hero a 100vh con el texto en el centro */
+     Para quién: quien dirige una pyme y compara a quién encargar la IA
+     Sensación: un despacho con luz de mañana, frases que se entienden a la primera
+     Idea: cartel de oferta, y debajo un encargo con nombre
+     Tipo: Sora 700 a unas 4× Figtree 18px, interletraje −0.02em
+     Color: papel #FAFAF8, tinta #1F2328; lima #C8F169 solo en el texto del botón
+     Detalle: Primer Canal nombra el trabajo; el resto de la página no lo repite
+     Rechazos: lista numerada por duplicado, cifra de mercado, correo sin qué pasa después */
 
   .cartel__grid {
     display: grid;
     min-width: 0;
-    grid-template-columns: 8.75rem minmax(0, 1fr);
-    column-gap: 1.5rem;
-    row-gap: 1.2rem;
+    row-gap: 1.15rem;
     align-items: start;
-    padding-block: clamp(3.25rem, 8vw, 6.5rem) clamp(2rem, 4vw, 3rem);
-  }
-
-  .cartel__grid:not(:has(.margen)) {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .margen {
-    grid-column: 1;
-    grid-row: 1;
-    max-width: 18ch;
-    padding-top: 0.85rem;
-    color: var(--clv-text-secondary);
-    font: 400 15px/1.4 var(--clv-font-mono);
+    padding-block: clamp(2.75rem, 6vw, 4.25rem) clamp(1.25rem, 3vw, 2rem);
   }
 
   h1 {
-    grid-column: 2;
-    grid-row: 1;
     min-width: 0;
-    font: var(--clv-text-display);
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font: 700 clamp(2.05rem, 1rem + 4.2vw, 5rem) / 1.02 var(--clv-font-display);
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
   h1 span {
     display: block;
-    width: fit-content;
-    max-width: 100%;
     animation: llega var(--dur-3) var(--ease-out) both;
   }
 
   h1 span + span { animation-delay: 60ms; }
-
-  h1 .marca {
-    margin-top: 0.14em;
-    padding: 0.02em 0.16em 0.08em;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 46%),
-      var(--clv-llima);
-    color: var(--clv-grafit);
-    border-radius: var(--clv-radius);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
-  }
 
   @keyframes llega {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: none; }
   }
 
-  .lede {
-    grid-column: 2;
-    grid-row: 2;
-    max-width: 36ch;
+  .lede,
+  .hecho {
+    max-width: 38rem;
+    color: var(--clv-text);
     font-size: 1.125rem;
     line-height: 1.5;
   }
 
+  .hecho { font-weight: 600; }
+
   .acciones {
-    grid-column: 2;
-    grid-row: 3;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -298,16 +190,16 @@ const clients = [
     text-underline-offset: 0.18em;
   }
 
-  .bloque { padding-block: clamp(4.5rem, 9vw, 8.5rem); }
+  .bloque { padding-block: clamp(3rem, 5.5vw, 4.75rem); }
 
   .clientes {
-    padding-block: clamp(4.5rem, 9vw, 8.5rem);
+    padding-block: clamp(3rem, 5.5vw, 4.75rem);
   }
 
   .bloque h2 {
-    max-width: 16em;
+    max-width: 22em;
     font: var(--clv-text-h2);
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
   }
 
   .clientes h2 {
@@ -324,7 +216,7 @@ const clients = [
     padding: 1.15rem 1.35rem;
     border: 1px solid rgba(255, 255, 255, 0.82);
     border-radius: var(--clv-radius);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.38));
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(18px) saturate(1.6);
     -webkit-backdrop-filter: blur(18px) saturate(1.6);
@@ -340,14 +232,14 @@ const clients = [
   .clientes__list img {
     display: block;
     width: auto;
-    height: 1.7rem;
-    max-width: 8.75rem;
+    height: 2.35rem;
+    max-width: 10.5rem;
     object-fit: contain;
   }
 
   .clientes__list li:nth-child(2) img {
-    height: 2.65rem;
-    max-width: 3.4rem;
+    height: 3.15rem;
+    max-width: 4rem;
   }
 
   .filas {
@@ -360,7 +252,7 @@ const clients = [
     grid-template-columns: 2.75rem minmax(0, 1fr);
     gap: 0.25rem 1.25rem;
     align-items: start;
-    padding-block: 1.2rem 1.35rem;
+    padding: 1.15rem 1.45rem;
     border-top: 1px solid var(--clv-border);
   }
 
@@ -380,38 +272,81 @@ const clients = [
     letter-spacing: -0.02em;
   }
 
-  .filas--trabajo li {
-    position: relative;
-    z-index: 0;
+  .filas--resto li { grid-template-columns: minmax(0, 1fr); }
+
+  .filas--resto .meta { grid-column: 1; }
+
+  .abre { min-width: 0; }
+
+  .abre summary {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    list-style: none;
+    cursor: pointer;
   }
 
-  .filas--trabajo li::before {
+  .abre summary::-webkit-details-marker { display: none; }
+
+  .abre summary::marker { content: ""; }
+
+  .abre__mas {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-top: -0.35rem;
+    color: var(--clv-text-secondary);
+  }
+
+  .abre__icon {
+    position: relative;
+    display: block;
+    width: 13px;
+    height: 13px;
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+
+  .abre__icon::before,
+  .abre__icon::after {
     content: "";
     position: absolute;
-    z-index: -1;
-    inset: 0.2rem 0;
-    border: 1px solid rgba(255, 255, 255, 0.84);
-    border-radius: var(--clv-radius);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.4));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(16px) saturate(1.55);
-    -webkit-backdrop-filter: blur(16px) saturate(1.55);
-    opacity: 0;
-    transition: opacity var(--dur-2) var(--ease-out);
-    pointer-events: none;
+    inset: 50% auto auto 50%;
+    background: currentColor;
+    border-radius: 1px;
   }
 
-  .filas--trabajo li.is-activa::before {
-    opacity: 1;
+  .abre__icon::before {
+    width: 100%;
+    height: 1.5px;
+    transform: translate(-50%, -50%);
   }
 
-  .filas--trabajo .num {
-    transition: color var(--dur-1) var(--ease-std);
+  .abre__icon::after {
+    width: 1.5px;
+    height: 100%;
+    transform: translate(-50%, -50%);
   }
 
-  .filas--trabajo li.is-activa .num {
+  .abre[open] .abre__icon {
+    transform: rotate(45deg);
+  }
+
+  .abre summary:hover .abre__mas,
+  .abre summary:focus-visible .abre__mas {
     color: var(--clv-text);
   }
+
+  .abre__cuerpo {
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--clv-border);
+  }
+
+  .abre__cuerpo p + p { margin-top: 0.55rem; }
 
   .filas p { max-width: 62ch; margin-top: 0.4rem; }
   .filas p + p { margin-top: 0.35rem; }
@@ -420,46 +355,12 @@ const clients = [
 
   .intro { max-width: 62ch; margin-top: 0.85rem; }
 
-  .listo {
-    list-style: none;
-    max-width: 62ch;
-    margin-top: 1.5rem;
+  .cierre__linea {
+    max-width: 42rem;
+    margin-top: 1rem;
   }
 
-  .listo li {
-    padding-block: 0.9rem;
-    border-top: 1px solid var(--clv-border);
-  }
-
-  .listo li:last-child { border-bottom: 1px solid var(--clv-border); }
-
-  .listo span {
-    display: block;
-    margin-bottom: 0.2rem;
-    font: 600 1.05rem/1.3 var(--clv-font-display);
-  }
-
-  .prueba {
-    max-width: 40rem;
-    padding: 1.2rem 1.35rem 1.25rem 1.15rem;
-    border-left: 2px solid var(--clv-text);
-    border-radius: 0 var(--clv-radius) var(--clv-radius) 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.36));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(16px) saturate(1.5);
-    -webkit-backdrop-filter: blur(16px) saturate(1.5);
-    font-size: 1.25rem;
-    line-height: 1.45;
-  }
-
-  .cifra { font-weight: 600; font-variant-numeric: tabular-nums; }
-
-  .fuente {
-    max-width: 40rem;
-    margin-top: 0.9rem;
-    padding-left: 1.1rem;
-    font: var(--clv-text-small);
-  }
+  .cierre__linea + .cierre__linea { margin-top: 0.4rem; }
 
   .cierre h2 { max-width: none; }
 
@@ -480,7 +381,7 @@ const clients = [
 
   @media (min-width: 800px) {
     .filas li {
-      grid-template-columns: 3rem minmax(0, 1fr) 10.5rem;
+      grid-template-columns: 3rem minmax(0, 1fr) 12rem;
       column-gap: 1.5rem;
     }
     .filas li:not(:has(.meta)) {
@@ -493,26 +394,31 @@ const clients = [
       text-align: right;
     }
 
+    .filas--resto li {
+      grid-template-columns: minmax(0, 1fr) 12rem;
+    }
+
+    .filas--resto .meta { grid-column: auto; }
+
     .clientes__list {
       gap: 1.5rem 3rem;
       padding: 1.35rem 1.6rem;
     }
 
     .clientes__list img {
-      height: 1.9rem;
-      max-width: 9.5rem;
+      height: 2.65rem;
+      max-width: 11rem;
     }
 
     .clientes__list li:nth-child(2) img {
-      height: 3rem;
-      max-width: 3.8rem;
+      height: 3.5rem;
+      max-width: 4.4rem;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .clientes__list a,
-    .filas--trabajo li::before,
-    .filas--trabajo li.is-activa .num {
+    .abre__icon {
       transition: none;
     }
 
@@ -521,13 +427,4 @@ const clients = [
     }
   }
 
-  @media (max-width: 839px) {
-    .cartel__grid { grid-template-columns: 1fr; }
-    .margen, h1, .lede, .acciones,
-    .cartel__grid:not(:has(.margen)) > * { grid-column: 1; }
-    h1 { grid-row: 1; }
-    .lede { grid-row: 2; }
-    .margen { grid-row: 3; max-width: 36ch; padding-top: 0; }
-    .acciones { grid-row: 4; }
-  }
 </style>

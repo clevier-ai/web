@@ -27,9 +27,6 @@ export const ogLocales: Record<Lang, string> = {
   ca: "ca_ES",
 };
 
-export const surveyHref =
-  "https://www.bde.es/f/webbe/SES/Secciones/Publicaciones/PublicacionesSeriadas/DocumentosOcasionales/26/Fich/do2624.pdf";
-
 export const linkedinHref = "https://www.linkedin.com/company/clevier";
 
 type Row = { dt: string; dd: string };
@@ -60,22 +57,17 @@ type Home = {
   legalLabel: string;
   claim: [string, string];
   lede: string;
+  proof: string;
   howLabel: string;
-  more: string;
-  less: string;
   clientsTitle: string;
   howTitle: string;
   howIntro: string;
-  steps: { title: string; detail: string }[];
+  steps: { title: string; detail: string; extra: string }[];
   workTitle: string;
   workLine: string;
-  services: { id: string; name: string; meta: string; more: string; detail: string }[];
-  prepareTitle: string;
-  prepareIntro: string;
-  prepare: { k: string; v: string }[];
-  surveyLabel: string;
-  survey: string;
-  surveySource: string;
+  services: { id: string; name: string; meta: string; more: string; detail: string; extra: string }[];
+  contactAfter: string;
+  contactNeed: string;
   contactTitle: string;
   linkedin: string;
   legalNav: Record<LegalId, string>;
@@ -180,7 +172,7 @@ export const copy = {
   es: {
     metaTitle: "Clevier — Implantación de IA para pymes",
     metaDescription:
-      "Montamos una herramienta de IA dentro del proceso que ya tienes. El precio se cierra antes de empezar.",
+      "Automatizamos el trabajo que se repite. En semanas, con el precio cerrado antes de empezar.",
     skip: "Saltar al contenido",
     write: "Háblanos",
     cta: "Cuéntanos el proceso",
@@ -190,79 +182,75 @@ export const copy = {
     hintCta: "Leer en castellano",
     languages: "Idioma",
     legalLabel: "Legal",
-    claim: ["Montamos la herramienta.", "Se queda en el trabajo."],
-    lede: "Entra en un proceso que ya tienes. El precio se cierra antes.",
+    claim: ["Automatizamos el trabajo que se repite.", "En semanas, con el precio cerrado."],
+    lede: "El parte, el pedido, la factura o el correo de siempre. La herramienta se queda en tu empresa.",
+    proof: "Con Primer Canal montamos la herramienta de cartelería.",
     howLabel: "Cómo va",
-    more: "Más",
-    less: "Menos",
     clientsTitle: "Con quién hemos trabajado",
     howTitle: "Cómo va",
-    howIntro: "De lo que nos cuentas a la herramienta dentro del proceso.",
+    howIntro: "De la primera conversación a la herramienta en marcha.",
     steps: [
       {
         title: "Cuentas el proceso",
         detail: "La tarea que se repite, la herramienta que usas ahora y quién la hace cada día.",
+        extra: "Con una tarea basta para saber si tiene sentido. No hace falta un dossier ni que venga todo el equipo a la primera llamada.",
       },
       {
         title: "Cerramos el precio",
-        detail: "Antes de montar nada, y no por horas.",
+        detail: "Antes de montar nada. Sin horas y sin sorpresas.",
+        extra: "Se cierra por el trabajo, no por las horas que tardemos. Si el alcance cambia, se vuelve a cerrar antes de seguir.",
       },
       {
         title: "Lo ves funcionar",
-        detail: "Pronto, con un caso tuyo. Si algo no encaja, se corrige ahí, no en un documento.",
+        detail: "En semanas, con un caso tuyo. Si algo no encaja, se corrige ahí, no en un documento.",
+        extra: "El caso es vuestro, con datos vuestros. Lo que no encaja se corrige en esa sesión.",
       },
       {
         title: "Entra en el trabajo",
-        detail: "El parte, el pedido, la factura o el correo que se contesta siempre igual.",
+        detail: "Pasa al día a día de quien hace el trabajo.",
+        extra: "A partir de ahí, quien hace el trabajo la usa en el día. Quien decide sabe qué está pasando.",
       },
     ],
     workTitle: "Qué hacemos",
-    workLine: "Si la IA no es la respuesta, te lo decimos.",
+    workLine: "Implantación, formación, diagnóstico y mantenimiento. Siempre en un proceso real.",
     services: [
       {
         id: "implantacion",
         name: "Implantación",
-        meta: "En el proceso",
-        more: "Un agente o una automatización dentro de un proceso que ya existe.",
+        meta: "En semanas",
+        more: "La herramienta entra en un proceso que ya existe.",
         detail:
-          "El parte de trabajo, el pedido, la factura o el correo que se contesta siempre igual. Entra en el trabajo, y al final la ves con un caso tuyo.",
+          "Se monta sobre el correo, una hoja o el programa de gestión. No hay un sistema nuevo que aprender.",
+        extra:
+          "En unas semanas lo pruebas con un caso vuestro. Lo que no encaja se corrige ahí.",
       },
       {
         id: "formacion",
         name: "Formación IA",
-        meta: "Plantilla y comité",
-        more: "De quien hace el trabajo diario a quien decide.",
-        detail:
-          "Quien hace el trabajo diario aprende a usar la herramienta en su proceso. Quien decide ve qué hace, qué datos toca y cómo encaja con el AI Act.",
+        meta: "Equipo y dirección",
+        more: "Quien hace el trabajo y quien decide salen sabiendo usarla.",
+        detail: "La práctica es con vuestro proceso, no con un ejemplo genérico.",
+        extra: "Quien decide sale sabiendo qué hace la herramienta sola y qué queda en una persona.",
       },
       {
         id: "rayos",
         name: "Rayos X",
-        meta: "Por dónde",
-        more: "Miramos los procesos y decimos por dónde se empieza.",
-        detail:
-          "Se mira la tarea que se repite, la herramienta que ya usas y quién la hace. Al final hay un sitio concreto por donde empezar.",
+        meta: "Por dónde empezar",
+        more: "Una lista corta de por dónde empezar.",
+        detail: "Qué automatizar primero, qué dejar quieto y qué no se resuelve con IA.",
+        extra: "Si no encaja, te lo decimos ahí. No es un informe largo.",
       },
       {
         id: "gestionada",
         name: "IA gestionada",
-        meta: "Al día",
-        more: "Mantenimiento, mejoras y casos nuevos.",
-        detail:
-          "Cuando ya funciona, sigue alguien al otro lado. Se corrige lo que se rompe y se añaden casos. La herramienta se ajusta al proceso.",
+        meta: "Después del arranque",
+        more: "Cuando ya funciona, seguimos.",
+        detail: "Se corrige lo que se rompe y se añaden casos nuevos.",
+        extra: "Este tramo también tiene el precio cerrado, no horas sueltas.",
       },
     ],
-    prepareTitle: "Qué preparar",
-    prepareIntro: "Con tres cosas basta para decirte si encaja y a qué precio.",
-    prepare: [
-      { k: "El proceso", v: "La tarea que se repite cada semana. Una basta." },
-      { k: "La herramienta", v: "La que usas ahora: el correo, una hoja o el programa de gestión." },
-      { k: "Quién", v: "Quien hace el trabajo cada día, y quien decide." },
-    ],
-    surveyLabel: "El dato",
-    survey:
-      "En el primer trimestre de 2026, entre el 30 % y el 35 % de las pymes españolas usaba IA, y cerca del 70 % de las grandes. En las pymes el uso se ha duplicado desde 2024 y sigue siendo, sobre todo, experimental.",
-    surveySource: "Banco de España, Documento Ocasional 2624.",
+    contactAfter: "Escribe el proceso. Antes de montar nada, te decimos si encaja y a qué precio.",
+    contactNeed: "Basta la tarea que se repite, la herramienta que usas ahora y quién la hace.",
     contactTitle: "Contacto",
     linkedin: "LinkedIn",
     legalNav: { notice: "Aviso legal", privacy: "Privacidad", cookies: "Cookies" },
@@ -329,7 +317,7 @@ export const copy = {
   ca: {
     metaTitle: "Clevier — Implantació d'IA per a pimes",
     metaDescription:
-      "Muntem una eina d'IA dins del procés que ja tens. El preu es tanca abans de començar.",
+      "Automatitzem la feina que es repeteix. En setmanes, amb el preu tancat abans de començar.",
     skip: "Ves al contingut",
     write: "Parla'ns",
     cta: "Explica'ns el procés",
@@ -339,79 +327,74 @@ export const copy = {
     hintCta: "Llegir en català",
     languages: "Idioma",
     legalLabel: "Legal",
-    claim: ["Muntem l'eina.", "Es queda a la feina."],
-    lede: "Entra en un procés que ja tens. El preu es tanca abans.",
+    claim: ["Automatitzem la feina que es repeteix.", "En setmanes, amb el preu tancat."],
+    lede: "El full, la comanda, la factura o el correu de sempre. L'eina es queda a la teva empresa.",
+    proof: "Amb Primer Canal vam muntar l'eina de cartelleria.",
     howLabel: "Com va",
-    more: "Més",
-    less: "Menys",
     clientsTitle: "Amb qui hem treballat",
     howTitle: "Com va",
-    howIntro: "Del que ens expliques a l'eina dins del procés.",
+    howIntro: "De la primera conversa a l'eina en marxa.",
     steps: [
       {
         title: "Expliques el procés",
         detail: "La tasca que es repeteix, l'eina que fas servir ara i qui la fa cada dia.",
+        extra: "Amb una tasca n'hi ha prou per saber si té sentit. No cal un dossier ni que vingui tot l'equip a la primera trucada.",
       },
       {
         title: "Tanquem el preu",
-        detail: "Abans de muntar res, i no per hores.",
+        detail: "Abans de muntar res. Sense hores i sense sorpreses.",
+        extra: "Es tanca per la feina, no per les hores que triguem. Si l'abast canvia, es torna a tancar abans de seguir.",
       },
       {
         title: "El veus funcionar",
-        detail: "Aviat, amb un cas teu. Si alguna cosa no encaixa, es corregeix allà, no en un document.",
+        detail: "En setmanes, amb un cas teu. Si alguna cosa no encaixa, es corregeix allà, no en un document.",
+        extra: "El cas és vostre, amb dades vostres. El que no encaixa es corregeix en aquella sessió.",
       },
       {
         title: "Entra a la feina",
-        detail: "El full, la comanda, la factura o el correu que es contesta sempre igual.",
+        detail: "Passa al dia a dia de qui fa la feina.",
+        extra: "A partir d'aquí, qui fa la feina la fa servir en el dia. Qui decideix sap què està passant.",
       },
     ],
     workTitle: "Què fem",
-    workLine: "Si la IA no és la resposta, t'ho diem.",
+    workLine: "Implantació, formació, diagnòstic i manteniment. Sempre en un procés real.",
     services: [
       {
         id: "implantacion",
         name: "Implantació",
-        meta: "En el procés",
-        more: "Un agent o una automatització dins d'un procés que ja existeix.",
+        meta: "En setmanes",
+        more: "L'eina entra en un procés que ja existeix.",
         detail:
-          "El full de treball, la comanda, la factura o el correu que es contesta sempre igual. Entra a la feina, i al final la veus amb un cas teu.",
+          "Es munta sobre el correu, un full o el programa de gestió. No hi ha un sistema nou per aprendre.",
+        extra: "En unes setmanes ho proves amb un cas vostre. El que no encaixa es corregeix allà.",
       },
       {
         id: "formacion",
         name: "Formació en IA",
-        meta: "Plantilla i comitè",
-        more: "De qui fa la feina diària a qui decideix.",
-        detail:
-          "Qui fa la feina diària aprèn a fer servir l'eina en el seu procés. Qui decideix veu què fa, quines dades toca i com encaixa amb l'AI Act.",
+        meta: "Equip i direcció",
+        more: "Qui fa la feina i qui decideix surten sabent fer-la servir.",
+        detail: "La pràctica és amb el vostre procés, no amb un exemple genèric.",
+        extra: "Qui decideix surt sabent què fa l'eina sola i què queda en mans d'una persona.",
       },
       {
         id: "rayos",
         name: "Raigs X",
-        meta: "Per on",
-        more: "Mirem els processos i diem per on es comença.",
-        detail:
-          "Es mira la tasca que es repeteix, l'eina que ja fas servir i qui la fa. Al final hi ha un lloc concret per on començar.",
+        meta: "Per on començar",
+        more: "Una llista curta de per on començar.",
+        detail: "Què automatitzar primer, què deixar quiet i què no es resol amb IA.",
+        extra: "Si no encaixa, t'ho diem allà. No és un informe llarg.",
       },
       {
         id: "gestionada",
         name: "IA gestionada",
-        meta: "Al dia",
-        more: "Manteniment, millores i casos nous.",
-        detail:
-          "Quan ja funciona, hi ha algú a l'altra banda. Es corregeix el que es trenca i s'afegeixen casos. L'eina s'ajusta al procés.",
+        meta: "Després de l'arrencada",
+        more: "Quan ja funciona, seguim.",
+        detail: "Es corregeix el que es trenca i s'afegeixen casos nous.",
+        extra: "Aquest tram també té el preu tancat, no hores soltes.",
       },
     ],
-    prepareTitle: "Què preparar",
-    prepareIntro: "Amb tres coses n'hi ha prou per dir-te si encaixa i a quin preu.",
-    prepare: [
-      { k: "El procés", v: "La tasca que es repeteix cada setmana. Una en té prou." },
-      { k: "L'eina", v: "La que fas servir ara: el correu, un full o el programa de gestió." },
-      { k: "Qui", v: "Qui fa la feina cada dia, i qui decideix." },
-    ],
-    surveyLabel: "La dada",
-    survey:
-      "El primer trimestre de 2026, entre el 30 % i el 35 % de les pimes espanyoles feia servir IA, i prop del 70 % de les grans. A les pimes l'ús s'ha duplicat des del 2024 i continua sent, sobretot, experimental.",
-    surveySource: "Banc d'Espanya, Document Ocasional 2624.",
+    contactAfter: "Escriu el procés. Abans de muntar res, et diem si encaixa i a quin preu.",
+    contactNeed: "N'hi ha prou amb la tasca que es repeteix, l'eina que fas servir ara i qui la fa.",
     contactTitle: "Contacte",
     linkedin: "LinkedIn",
     legalNav: { notice: "Avís legal", privacy: "Privacitat", cookies: "Cookies" },
