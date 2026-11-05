@@ -33,7 +33,6 @@ const clients = [
           <span>{t.claim[1]}</span>
         </h1>
         <p class="lede">{t.lede}</p>
-        <p class="hecho">{t.proof}</p>
         <div class="acciones">
           <a class="btn" href="#contacto">{t.cta}</a>
           <a class="salto" href="#como">{t.howLabel}</a>
@@ -130,11 +129,11 @@ const clients = [
   /* Dirección — inicio de Clevier
      Para quién: quien dirige una pyme y compara a quién encargar la IA
      Sensación: un despacho con luz de mañana, frases que se entienden a la primera
-     Idea: cartel de oferta, y debajo un encargo con nombre
+     Idea: cartel de oferta — dos líneas que dicen qué, cuándo y a qué precio
      Tipo: Sora 700 a unas 4× Figtree 18px, interletraje −0.02em
      Color: papel #FAFAF8, tinta #1F2328; lima #C8F169 solo en el texto del botón
-     Detalle: Primer Canal nombra el trabajo; el resto de la página no lo repite
-     Rechazos: lista numerada por duplicado, cifra de mercado, correo sin qué pasa después */
+     Detalle: el ejemplo (parte, pedido, factura) va en la frase de debajo
+     Rechazos: eslogan que hay que descifrar, titular a tamaño de valla, desierto entre secciones */
 
   .cartel__grid {
     display: grid;
@@ -163,15 +162,12 @@ const clients = [
     to { opacity: 1; transform: none; }
   }
 
-  .lede,
-  .hecho {
+  .lede {
     max-width: 38rem;
     color: var(--clv-text);
     font-size: 1.125rem;
     line-height: 1.5;
   }
-
-  .hecho { font-weight: 600; }
 
   .acciones {
     display: flex;

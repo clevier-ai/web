@@ -57,7 +57,6 @@ type Home = {
   legalLabel: string;
   claim: [string, string];
   lede: string;
-  proof: string;
   howLabel: string;
   clientsTitle: string;
   howTitle: string;
@@ -184,7 +183,6 @@ export const copy = {
     legalLabel: "Legal",
     claim: ["Automatizamos el trabajo que se repite.", "En semanas, con el precio cerrado."],
     lede: "El parte, el pedido, la factura o el correo de siempre. La herramienta se queda en tu empresa.",
-    proof: "Con Primer Canal montamos la herramienta de cartelería.",
     howLabel: "Cómo va",
     clientsTitle: "Con quién hemos trabajado",
     howTitle: "Cómo va",
@@ -329,7 +327,6 @@ export const copy = {
     legalLabel: "Legal",
     claim: ["Automatitzem la feina que es repeteix.", "En setmanes, amb el preu tancat."],
     lede: "El full, la comanda, la factura o el correu de sempre. L'eina es queda a la teva empresa.",
-    proof: "Amb Primer Canal vam muntar l'eina de cartelleria.",
     howLabel: "Com va",
     clientsTitle: "Amb qui hem treballat",
     howTitle: "Com va",
