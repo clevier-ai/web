@@ -406,6 +406,149 @@ const clients = [
     grid-template-columns: 2.75rem minmax(0, 1fr);
   }
 
+  /* Móvil: más aire, tipografía un poco más pequeña, menos apretado.
+     Escritorio (≥800px) se queda como está. */
+  @media (max-width: 799px) {
+    .cartel__grid {
+      row-gap: 1.4rem;
+      padding-block: 2.25rem 2.75rem;
+    }
+
+    h1 {
+      font-size: clamp(1.85rem, 1.15rem + 3.2vw, 2.35rem);
+      line-height: 1.08;
+    }
+
+    .lede {
+      font-size: 1.05rem;
+      line-height: 1.55;
+      max-width: 28rem;
+    }
+
+    .acciones {
+      gap: 10px 18px;
+      margin-top: 0.25rem;
+    }
+
+    .salto {
+      font-size: 1rem;
+    }
+
+    .bloque,
+    .clientes {
+      padding-block: 3.75rem;
+    }
+
+    .bloque h2 {
+      font-size: clamp(1.55rem, 1.2rem + 1.8vw, 1.85rem);
+      line-height: 1.15;
+    }
+
+    .intro {
+      margin-top: 1rem;
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .filas {
+      margin-top: 2rem;
+    }
+
+    .filas li {
+      grid-template-columns: 2.35rem minmax(0, 1fr);
+      column-gap: 0.85rem;
+      padding: 1.45rem 0;
+    }
+
+    .filas li:not(:has(.meta)) {
+      grid-template-columns: 2.35rem minmax(0, 1fr);
+    }
+
+    .filas--resto li {
+      grid-template-columns: minmax(0, 1fr);
+      padding-block: 1.55rem;
+    }
+
+    .num {
+      padding-top: 0.3rem;
+      font-size: 11px;
+    }
+
+    .filas h3 {
+      font-size: 1.2rem;
+      line-height: 1.25;
+    }
+
+    .filas p {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .filas--resto .abre summary {
+      column-gap: 0.65rem;
+      row-gap: 0.5rem;
+    }
+
+    .filas--resto .abre summary .meta {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    .abre__mas {
+      width: 40px;
+      height: 40px;
+      margin-top: -0.2rem;
+    }
+
+    .abre__cuerpo {
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+
+    .abre__cuerpo p + p {
+      margin-top: 0.7rem;
+    }
+
+    .clientes__list {
+      gap: 1.5rem 1.75rem;
+      margin-top: 1.5rem;
+      padding: 1.35rem 1.2rem;
+    }
+
+    .clientes__list img {
+      height: 2.1rem;
+      max-width: 9rem;
+    }
+
+    .clientes__list li:nth-child(2) img {
+      height: 2.75rem;
+      max-width: 3.5rem;
+    }
+
+    .cierre__linea {
+      margin-top: 1.15rem;
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .cierre__linea + .cierre__linea {
+      margin-top: 0.65rem;
+    }
+
+    .mail {
+      font-size: clamp(1.65rem, 1rem + 3.5vw, 2.15rem);
+      line-height: 1.12;
+    }
+
+    #clientes,
+    #como,
+    #trabajo,
+    #contacto {
+      scroll-margin-top: 5rem;
+    }
+  }
+
   @media (min-width: 800px) {
     .filas li {
       grid-template-columns: 3rem minmax(0, 1fr) 12rem;

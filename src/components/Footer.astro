@@ -208,6 +208,35 @@ const hintOptions = langs.map((code) => ({
     font: var(--clv-text-small);
   }
 
+  @media (max-width: 799px) {
+    .footer {
+      padding-block: 2rem 3.25rem;
+    }
+
+    .footer__inner {
+      gap: 0.35rem;
+    }
+
+    .footlinks {
+      gap: 6px 16px;
+      margin-top: 0.85rem;
+    }
+
+    .legal {
+      gap: 2px 14px;
+      margin-top: 0.65rem;
+    }
+
+    .legal a {
+      font-size: 14px;
+    }
+
+    .copy {
+      margin-top: 0.5rem;
+      font-size: 14px;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .langs a,
     .legal a,

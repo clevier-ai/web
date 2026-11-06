@@ -173,6 +173,33 @@ const contactHref = to("contacto");
     }
   }
 
+  @media (max-width: 799px) {
+    .header {
+      top: 10px;
+      width: min(1120px, calc(100% - 20px));
+    }
+
+    .bar {
+      min-height: 58px;
+      gap: 10px;
+      padding-inline: 14px;
+    }
+
+    .brand img {
+      width: 96px;
+    }
+
+    .header__cta {
+      min-height: 40px;
+      padding-inline: 0.85rem;
+      font-size: 14px;
+    }
+
+    .menu summary {
+      font-size: 14px;
+    }
+  }
+
   @media (min-width: 800px) {
     .bar {
       min-height: 72px;

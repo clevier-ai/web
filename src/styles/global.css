@@ -150,6 +150,27 @@ p {
   transition: background-color var(--dur-1) var(--ease-std);
 }
 
+@media (max-width: 799px) {
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .wrap {
+    width: min(1120px, calc(100% - 44px));
+  }
+
+  .btn {
+    min-height: 46px;
+    padding: 0 1.05rem;
+    font-size: 15px;
+  }
+}
+
 .btn:hover {
   background: var(--clv-cta-hover);
 }
