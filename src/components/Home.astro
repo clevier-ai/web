@@ -1,11 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { copy, type Lang } from "../i18n/ui";
-import logoPrimerCanal from "../assets/clients/primercanal.png";
-import logoMetalografica from "../assets/clients/metalografica.png";
-import logoCocoHomes from "../assets/clients/coco-homes.png";
-import logoDelgo from "../assets/clients/delgo.png";
-import logoAql from "../assets/clients/aql.png";
 
 interface Props {
   lang: Lang;
@@ -14,14 +9,6 @@ interface Props {
 const { lang } = Astro.props;
 const t = copy[lang];
 const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)}&body=${encodeURIComponent(t.mailBody)}`;
-
-const clients = [
-  { name: "Primer Canal", href: "https://primercanal.com/", logo: logoPrimerCanal },
-  { name: "Metalográfica", href: "https://metalografica.com/", logo: logoMetalografica },
-  { name: "Coco Homes", href: "https://www.coco-homes.es/", logo: logoCocoHomes },
-  { name: "Delgo", href: "https://delgo.es/", logo: logoDelgo },
-  { name: "AQL Protección", href: "https://www.aqlproteccion.com/", logo: logoAql },
-];
 ---
 
 <BaseLayout lang={lang} page="home" title={t.metaTitle} description={t.metaDescription}>
@@ -93,30 +80,6 @@ const clients = [
                     <p>{service.extra}</p>
                   </div>
                 </details>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </section>
-
-    <section class="bloque clientes" id="clientes" aria-labelledby="clients-title">
-      <div class="wrap">
-        <h2 id="clients-title">{t.clientsTitle}</h2>
-        <ul class="clientes__list">
-          {
-            clients.map((client) => (
-              <li>
-                <a href={client.href} target="_blank" rel="noopener noreferrer">
-                  <img
-                    src={client.logo.src}
-                    alt={client.name}
-                    width={client.logo.width}
-                    height={client.logo.height}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </a>
               </li>
             ))
           }
@@ -199,54 +162,10 @@ const clients = [
 
   .bloque { padding-block: clamp(3rem, 5.5vw, 4.75rem); }
 
-  .clientes {
-    padding-block: clamp(3rem, 5.5vw, 4.75rem);
-  }
-
   .bloque h2 {
     max-width: 22em;
     font: var(--clv-text-h2);
     letter-spacing: -0.02em;
-  }
-
-  .clientes h2 {
-    max-width: 16em;
-  }
-
-  .clientes__list {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1.35rem 2.5rem;
-    list-style: none;
-    margin-top: 1.75rem;
-    padding: 1.15rem 1.35rem;
-    border: 1px solid rgba(255, 255, 255, 0.82);
-    border-radius: var(--clv-radius);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(18px) saturate(1.6);
-    -webkit-backdrop-filter: blur(18px) saturate(1.6);
-  }
-
-  .clientes__list a {
-    display: grid;
-    place-items: center;
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  .clientes__list img {
-    display: block;
-    width: auto;
-    height: 2.35rem;
-    max-width: 10.5rem;
-    object-fit: contain;
-  }
-
-  .clientes__list li:nth-child(2) img {
-    height: 3.15rem;
-    max-width: 4rem;
   }
 
   .filas {
@@ -400,7 +319,7 @@ const clients = [
     overflow-wrap: anywhere;
   }
 
-  #clientes, #como, #trabajo, #contacto { scroll-margin-top: 5.5rem; }
+  #como, #trabajo, #contacto { scroll-margin-top: 5.5rem; }
 
   .filas li:not(:has(.meta)) {
     grid-template-columns: 2.75rem minmax(0, 1fr);
@@ -434,8 +353,7 @@ const clients = [
       font-size: 1rem;
     }
 
-    .bloque,
-    .clientes {
+    .bloque {
       padding-block: 3.75rem;
     }
 
@@ -510,22 +428,6 @@ const clients = [
       margin-top: 0.7rem;
     }
 
-    .clientes__list {
-      gap: 1.5rem 1.75rem;
-      margin-top: 1.5rem;
-      padding: 1.35rem 1.2rem;
-    }
-
-    .clientes__list img {
-      height: 2.1rem;
-      max-width: 9rem;
-    }
-
-    .clientes__list li:nth-child(2) img {
-      height: 2.75rem;
-      max-width: 3.5rem;
-    }
-
     .cierre__linea {
       margin-top: 1.15rem;
       font-size: 1.05rem;
@@ -541,7 +443,6 @@ const clients = [
       line-height: 1.12;
     }
 
-    #clientes,
     #como,
     #trabajo,
     #contacto {
@@ -578,25 +479,9 @@ const clients = [
       padding-top: 0.45rem;
       text-align: right;
     }
-
-    .clientes__list {
-      gap: 1.5rem 3rem;
-      padding: 1.35rem 1.6rem;
-    }
-
-    .clientes__list img {
-      height: 2.65rem;
-      max-width: 11rem;
-    }
-
-    .clientes__list li:nth-child(2) img {
-      height: 3.5rem;
-      max-width: 4.4rem;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .clientes__list a,
     .abre__icon {
       transition: none;
     }

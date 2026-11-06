@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1512" height="256" viewBox="0 0 1512 256" fill="none">
+  <defs>
+    <filter id="suave" x="-40%" y="-80%" width="180%" height="260%">
+      <feGaussianBlur stdDeviation="48"/>
+    </filter>
+  </defs>
+
+  <rect width="1512" height="256" fill="#FAFAF8"/>
+
+  <g filter="url(#suave)" opacity="0.95">
+    <ellipse cx="255" cy="-13" rx="375" ry="141" fill="#C8F169"/>
+    <ellipse cx="80" cy="147" rx="214" ry="121" fill="#2FBF71" fill-opacity="0.35"/>
+    <ellipse cx="1434" cy="261" rx="241" ry="114" fill="#C8F169" fill-opacity="0.7"/>
+  </g>
+
+  <text
+    x="1398"
+    y="136"
+    text-anchor="end"
+    dominant-baseline="middle"
+    fill="#1F2328"
+    font-family="Sora, Avenir Next, Helvetica Neue, Arial, sans-serif"
+    font-size="28"
+    font-weight="600"
+    letter-spacing="0.06em"
+  >clevier.ai</text>
+</svg>
