@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Debe coincidir con el Worker name del CI de Cloudflare ("web").
+  "name": "web",
+  "compatibility_date": "2025-11-06",
+  "assets": {
+    "directory": "./dist"
+  }
+}
