@@ -57,7 +57,7 @@ const organization = {
         .filter((code) => code !== lang)
         .map((code) => <meta property="og:locale:alternate" content={ogLocales[code]} />)
     }
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     {
       (Object.entries(routes) as [Lang, (typeof routes)[Lang]][]).map(([code, path]) => (
         <link rel="alternate" hreflang={code} href={new URL(path[page], site).href} />
