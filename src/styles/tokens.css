@@ -1,34 +1,48 @@
-/* Clevier · Tokens
-   Un solo tema: papel #FAFAF8, tinta #1F2328.
-   Lima #C8F169 en el texto del botón y en la segunda línea del titular. */
+/* Clevier · Tokens finales
+   Tema: Seco + glow · marfil
+   Papel #F7F6F2, tinta #1A1C1E, CTA marfil #F4F1EA sobre grafito.
+   Glow lima suave solo en el fondo. Marca: CL 67° + “evier” (−0.09em). */
 :root {
-  --clv-grafit: #1f2328;
+  --clv-grafit: #1a1c1e;
   --clv-verd: #2fbf71;
   --clv-llima: #c8f169;
-  --clv-paper: #fafaf8;
-  --clv-boira: #e6e8e6;
-  --clv-pedra: #4a5057;
-  --clv-nit: #14171a;
+  --clv-marfil: #f4f1ea;
+  --clv-paper: #f7f6f2;
+  --clv-boira: #e2e0da;
+  --clv-pedra: #3f454c;
+  --clv-nit: #121416;
   --clv-blanc: #ffffff;
   --clv-exit: #2fbf71;
   --clv-error: #c83c3c;
   --clv-avis: #e8a33d;
-  --clv-bg: #fafaf8;
+
+  --clv-bg: #f7f6f2;
   --clv-surface: #ffffff;
-  --clv-border: #e6e8e6;
-  --clv-text: #1f2328;
-  --clv-text-secondary: #4a5057;
+  --clv-border: #e2e0da;
+  --clv-text: #1a1c1e;
+  --clv-text-secondary: #3f454c;
   --clv-accent: #2fbf71;
-  --clv-cta-bg: #1f2328;
-  --clv-cta-text: #c8f169;
-  --clv-cta-hover: #343a40;
-  --clv-font-display: "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --clv-cta-bg: #1a1c1e;
+  --clv-cta-text: #f4f1ea;
+  --clv-cta-hover: #2c3034;
+
+  --clv-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(247, 246, 242, 0.28));
+  --clv-glass-border: rgba(255, 255, 255, 0.8);
+
+  --clv-font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
   --clv-font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --clv-font-mono: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --clv-font-mono: "JetBrains Mono", monospace;
+
+  --clv-display-vars: "SOFT" 40, "opsz" 72, "wght" 700;
+  --clv-heading-vars: "SOFT" 30, "opsz" 36, "wght" 600;
+
+  --clv-lockup-gap: -0.09em;
+  --clv-lockup-tracking: -0.03em;
+
   --clv-text-display: 700 clamp(3.25rem, 1rem + 5.2vw, 6.25rem) / 0.96 var(--clv-font-display);
   --clv-text-h1: 700 clamp(2.25rem, 1.2rem + 2vw, 3.25rem) / 1.02 var(--clv-font-display);
-  --clv-text-h2: 600 clamp(1.7rem, 1.15rem + 1.6vw, 2.5rem) / 1.08 var(--clv-font-display);
-  --clv-text-h3: 600 1.35rem / 1.2 var(--clv-font-display);
+  --clv-text-h2: 600 clamp(1.75rem, 1.2rem + 1.5vw, 2.55rem) / 1.08 var(--clv-font-display);
+  --clv-text-h3: 600 1.4rem / 1.2 var(--clv-font-display);
   --clv-text-body: 400 18px/1.5 var(--clv-font-body);
   --clv-text-small: 400 15px/1.45 var(--clv-font-body);
   --clv-text-label: 400 12px/1.35 var(--clv-font-mono);

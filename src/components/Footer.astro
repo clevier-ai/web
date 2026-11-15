@@ -38,6 +38,11 @@ const hintOptions = langs.map((code) => ({
       </button>
     </div>
 
+    <a class="footer-brand" href={routes[lang].home} aria-label="Clevier">
+      <img src="/brand/cl-angle-67deg.svg" alt="" width="28" height="24" />
+      <span>evier</span>
+    </a>
+
     <div class="footlinks">
       <nav class="langs" aria-label={t.languages}>
         {
@@ -119,6 +124,31 @@ const hintOptions = langs.map((code) => ({
   .footer__inner {
     display: grid;
     gap: 4px;
+  }
+
+  .footer-brand {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 0;
+    margin-bottom: 4px;
+    text-decoration: none;
+    color: var(--clv-text);
+  }
+
+  .footer-brand img {
+    height: 1.15em;
+    width: auto;
+    font-size: 20px;
+    margin-right: var(--clv-lockup-gap);
+  }
+
+  .footer-brand span {
+    font-family: var(--clv-font-display);
+    font-weight: 700;
+    font-size: 20px;
+    font-variation-settings: "SOFT" 30, "opsz" 20, "wght" 700;
+    letter-spacing: var(--clv-lockup-tracking);
+    line-height: 1;
   }
 
   .hint {

@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { copy, routes, type Lang } from "../i18n/ui";
+
+/** Prefer Catalan if the path or Accept-Language points there. */
+const accept = Astro.request.headers.get("accept-language")?.toLowerCase() ?? "";
+const fromPath = Astro.url.pathname.startsWith("/ca");
+const lang: Lang = fromPath || accept.startsWith("ca") ? "ca" : "es";
+const t = copy[lang];
+const home = routes[lang].home;
+const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)}&body=${encodeURIComponent(t.mailBody)}`;
+---
+
+<BaseLayout lang={lang} page="home" title={t.notFoundTitle} description={t.notFoundLede}>
+  <section class="lost">
+    <div class="wrap lost__grid">
+      <p class="lost__code" aria-hidden="true">404</p>
+      <h1>{t.notFoundClaim}</h1>
+      <p class="lost__lede">{t.notFoundLede}</p>
+      <div class="lost__acciones">
+        <a class="btn" href={home}>{t.notFoundHome}</a>
+        <a class="salto" href={mail}>{t.write}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Dirección — 404
+     Idea: cartel breve, mismo papel seco + glow; el 404 es tipografía, no ilustración
+     Tipo: Fraunces para el número y el claim; Figtree para la frase
+     Rechazos: astronauta, glitch, “oops”, dos botones del mismo peso */
+
+  .lost {
+    min-height: calc(100dvh - 8rem);
+    display: grid;
+    align-content: center;
+  }
+
+  .lost__grid {
+    display: grid;
+    row-gap: 1.15rem;
+    padding-block: clamp(2.5rem, 8vw, 5rem) clamp(3rem, 8vw, 5rem);
+  }
+
+  .lost__code {
+    font: 700 clamp(4.5rem, 2rem + 12vw, 9rem) / 0.85 var(--clv-font-display);
+    font-variation-settings: var(--clv-display-vars);
+    letter-spacing: -0.06em;
+    color: color-mix(in srgb, var(--clv-text) 14%, transparent);
+    user-select: none;
+  }
+
+  h1 {
+    max-width: 14em;
+    font: 700 clamp(1.85rem, 1rem + 2.8vw, 3.25rem) / 1.02 var(--clv-font-display);
+    font-variation-settings: var(--clv-display-vars);
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .lost__lede {
+    max-width: 34rem;
+    font-size: 1.125rem;
+    line-height: 1.5;
+    color: var(--clv-text-secondary);
+  }
+
+  .lost__acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 22px;
+    margin-top: 0.35rem;
+  }
+
+  .salto {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    font-size: 1.0625rem;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  @media (max-width: 799px) {
+    .lost__grid {
+      row-gap: 1rem;
+      padding-block: 2rem 3rem;
+    }
+
+    h1 {
+      font-size: clamp(1.65rem, 1.1rem + 2.5vw, 2.2rem);
+    }
+
+    .lost__lede {
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+  }
+</style>

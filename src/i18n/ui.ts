@@ -68,6 +68,10 @@ type Home = {
   contactNeed: string;
   contactTitle: string;
   linkedin: string;
+  notFoundTitle: string;
+  notFoundClaim: string;
+  notFoundLede: string;
+  notFoundHome: string;
   legalNav: Record<LegalId, string>;
   legal: Record<LegalId, LegalDoc>;
 };
@@ -249,6 +253,10 @@ export const copy = {
     contactNeed: "Basta con la tarea que se repite, la herramienta que usáis ahora y quién la realiza.",
     contactTitle: "Contacto",
     linkedin: "LinkedIn",
+    notFoundTitle: "Página no encontrada — Clevier",
+    notFoundClaim: "Esta página no existe.",
+    notFoundLede: "El enlace está mal o la página se ha movido. Vuelve al inicio, o escríbenos si buscabas un proceso.",
+    notFoundHome: "Volver al inicio",
     legalNav: { notice: "Aviso legal", privacy: "Privacidad", cookies: "Cookies" },
     legal: {
       notice: notice("es", {
@@ -391,6 +399,10 @@ export const copy = {
     contactNeed: "N'hi ha prou amb la tasca que es repeteix, l'eina que feu servir ara i qui la fa.",
     contactTitle: "Contacte",
     linkedin: "LinkedIn",
+    notFoundTitle: "Pàgina no trobada — Clevier",
+    notFoundClaim: "Aquesta pàgina no existeix.",
+    notFoundLede: "L'enllaç és incorrecte o la pàgina s'ha mogut. Torna a l'inici, o escriu-nos si buscaves un procés.",
+    notFoundHome: "Tornar a l'inici",
     legalNav: { notice: "Avís legal", privacy: "Privacitat", cookies: "Cookies" },
     legal: {
       notice: notice("ca", {
