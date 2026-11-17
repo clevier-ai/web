@@ -28,17 +28,49 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-body::before {
-  content: "";
+/* Glow vivo como el banner LinkedIn: manchas lima/verd + blur */
+.site-glow {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  /* Seco + glow: lima suave sobre papel seco, sin fosforito en UI */
-  background:
-    radial-gradient(64rem 18rem at 50% -5rem, color-mix(in srgb, var(--clv-llima) 42%, transparent), transparent 72%),
-    radial-gradient(28rem 22rem at 92% 100%, color-mix(in srgb, var(--clv-llima) 22%, transparent), transparent 70%),
-    var(--clv-bg);
+  overflow: hidden;
+  background: var(--clv-bg);
+}
+
+.site-glow__lima-tl,
+.site-glow__verd-bl,
+.site-glow__lima-br {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(52px);
+}
+
+.site-glow__lima-tl {
+  left: -6%;
+  top: -18%;
+  width: min(72vw, 58rem);
+  height: min(56vh, 42rem);
+  background: var(--clv-llima);
+  opacity: 0.92;
+}
+
+.site-glow__verd-bl {
+  left: -12%;
+  bottom: -22%;
+  width: min(52vw, 42rem);
+  height: min(52vh, 38rem);
+  background: var(--clv-verd);
+  opacity: 0.55;
+}
+
+.site-glow__lima-br {
+  right: -10%;
+  bottom: -26%;
+  width: min(48vw, 40rem);
+  height: min(50vh, 36rem);
+  background: var(--clv-llima);
+  opacity: 0.8;
 }
 
 h1,
