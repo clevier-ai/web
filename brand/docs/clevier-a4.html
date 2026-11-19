@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8" />
+<title>Briefing · Les comandes del dissabte</title>
+<!--
+  Plantilla A4 de Clevier. Llegeix clevier-a4.md abans de canviar res.
+  Substitueix el contingut d'exemple. No canviïs el CSS.
+  Imprimeix a A4, amb fons, sense capçalera del navegador.
+-->
+<style>
+  @font-face {
+    font-family: "Fraunces";
+    src: url("fonts/fraunces-latin-full-normal.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Figtree";
+    src: url("fonts/figtree-latin-400-normal.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Figtree";
+    src: url("fonts/figtree-latin-600-normal.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: url("fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+  }
+
+  :root {
+    --paper: #ffffff;
+    --ink: #1a1c1e;
+    --stone: #3f454c;
+    --mist: #d8d9d6;
+    --lime: #c8f169;
+  }
+
+  * { box-sizing: border-box; }
+
+  @page {
+    size: A4;
+    margin: 16mm 20mm 18mm 20mm;
+    @bottom-left {
+      content: "clevier.ai";
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 8pt;
+      color: #3f454c;
+    }
+    @bottom-right {
+      content: counter(page);
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 8pt;
+      color: #3f454c;
+    }
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    color: var(--ink);
+    font-family: "Figtree", "Segoe UI", sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.48;
+    font-weight: 400;
+  }
+
+  table.frame {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  table.frame > thead td,
+  table.frame > tbody > tr > td {
+    border: 0;
+    padding: 0;
+  }
+
+  table.frame > thead td { padding-bottom: 7mm; }
+
+  .running-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 2.5mm;
+    border-bottom: 0.5pt solid var(--mist);
+  }
+
+  .mark { width: 7.5mm; height: auto; display: block; }
+
+  .doc-type {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 8pt;
+    color: var(--stone);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .lime {
+    height: 1mm;
+    background: var(--lime);
+    margin: 0 0 7mm;
+  }
+
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 700;
+    font-size: 18pt;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    font-variation-settings: "SOFT" 10, "opsz" 36, "wght" 700;
+    margin: 0 0 2.5mm;
+  }
+
+  .lede {
+    margin: 0 0 6mm;
+    max-width: 40em;
+    color: var(--stone);
+    font-size: 10.5pt;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 0.6fr;
+    gap: 6mm;
+    margin: 0 0 8mm;
+    padding: 3.5mm 0;
+    border-top: 0.5pt solid var(--mist);
+    border-bottom: 0.5pt solid var(--mist);
+  }
+
+  .meta span {
+    display: block;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 7.5pt;
+    color: var(--stone);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin-bottom: 1mm;
+  }
+
+  .meta p { margin: 0; }
+
+  .meta strong {
+    font-family: "Figtree", sans-serif;
+    font-weight: 600;
+    font-size: 10.5pt;
+    color: var(--ink);
+  }
+
+  section { margin: 0 0 5mm; }
+
+  section h2 {
+    display: grid;
+    grid-template-columns: 10mm 1fr;
+    gap: 2mm;
+    align-items: baseline;
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 11.5pt;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    font-variation-settings: "SOFT" 8, "opsz" 22, "wght" 600;
+    margin: 0 0 1.8mm;
+    break-after: avoid;
+  }
+
+  section h2 em {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 8pt;
+    letter-spacing: 0.02em;
+    color: var(--stone);
+  }
+
+  p { margin: 0 0 2mm; }
+  p:last-child { margin-bottom: 0; }
+
+  ul {
+    margin: 0;
+    padding: 0 0 0 12mm;
+  }
+
+  li { margin: 0 0 1mm; }
+  li::marker { color: var(--stone); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2.5mm;
+    break-inside: avoid;
+  }
+
+  th, td {
+    text-align: left;
+    vertical-align: top;
+    padding: 2mm 4mm 2mm 0;
+    border-bottom: 0.4pt solid var(--mist);
+    font-weight: 400;
+  }
+
+  th {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 7.5pt;
+    color: var(--stone);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding-bottom: 2.5mm;
+  }
+
+  .close {
+    break-inside: avoid;
+    margin-top: 2mm;
+  }
+
+  .signs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16mm;
+    margin-top: 5mm;
+  }
+
+  .signs p { margin: 0 0 1mm; }
+
+  .signs .line {
+    margin-top: 18mm;
+    border-top: 0.5pt solid var(--ink);
+    padding-top: 2mm;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 7.5pt;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+</style>
+</head>
+<body>
+<table class="frame">
+<thead><tr><td>
+  <header class="running-head">
+    <svg class="mark" viewBox="0 0 405 354" aria-hidden="true">
+      <path fill="#1A1C1E" fill-rule="evenodd" d="M 154.500 10.676 C 139.160 12.598, 117.590 19.195, 102.326 26.633 C 44.519 54.801, 7.420 117.652, 10.324 182.500 C 13.741 258.818, 67.653 322.733, 142.239 338.893 C 180.279 347.134, 220.269 341.984, 255.047 324.363 L 267.691 317.957 275.941 322.030 C 290.604 329.271, 303.199 333.573, 318.933 336.714 C 331.126 339.149, 360.243 339.130, 372.374 336.681 C 381.763 334.785, 397 330.272, 397 329.388 C 397 329.099, 392.219 317.606, 386.376 303.847 C 376.648 280.943, 375.572 278.881, 373.626 279.412 C 372.457 279.731, 367.937 280.725, 363.581 281.621 C 353.308 283.734, 332.723 283.032, 322.415 280.219 C 311.456 277.227, 311.461 277.234, 315.679 271.982 C 329.716 254.504, 343.095 228.045, 349.329 205.435 C 354.082 188.197, 355.359 178.607, 355.377 160 C 355.398 139.335, 353.720 128.164, 347.996 110.867 C 341.356 90.798, 332.400 75.660, 319.808 63.220 C 308.958 52.499, 299.289 46.480, 286 42.173 C 235.831 25.912, 185.907 58.960, 171.903 117.702 C 167.876 134.595, 167.913 161.725, 171.993 182.445 C 178.018 213.048, 194.415 247.513, 214.112 270.971 C 217.438 274.933, 220.011 278.311, 219.830 278.478 C 218.819 279.411, 202.409 283.962, 196 285.087 C 184.951 287.025, 165.431 286.620, 153.862 284.211 C 121.765 277.531, 92.479 254.861, 77.566 225.154 C 72.675 215.412, 68.427 202.171, 66.949 192.066 C 65.075 179.245, 66.216 158.632, 69.443 147.035 C 72.512 136.006, 78.966 121.885, 85 113 C 90.551 104.826, 101.848 92.969, 110 86.761 C 123.305 76.630, 145.187 67.907, 163.358 65.491 L 168.216 64.845 167.589 58.673 C 166.599 48.936, 164.013 15.789, 164.006 12.750 C 164 9.828, 163.002 9.610, 154.500 10.676 M 256 94.034 C 243.876 96.111, 232.125 109.666, 226.553 128 C 224.043 136.261, 223.484 153.609, 225.361 165.012 C 229.688 191.299, 242.044 217.849, 259.520 238.406 L 265.391 245.313 268.784 241.406 C 273.335 236.166, 282.024 222.898, 285.764 215.478 C 300.388 186.461, 303.790 155.662, 295.356 128.635 C 290.757 113.895, 281.830 101.066, 272.993 96.496 C 268.962 94.412, 260.745 93.221, 256 94.034"/>
+    </svg>
+    <p class="doc-type">Briefing</p>
+  </header>
+</td></tr></thead>
+<tbody><tr><td>
+
+  <div class="lime" aria-hidden="true"></div>
+
+  <h1>Les comandes del dissabte</h1>
+  <p class="lede">El que hem entès del Forn Jaume abans de tancar preu i termini. Si alguna línia no és el que passa, es corregeix ara.</p>
+
+  <div class="meta">
+    <p><span>Client</span><strong>Forn Jaume</strong></p>
+    <p><span>Data</span><strong>19.11.2026</strong></p>
+    <p><span>Versió</span><strong>v1</strong></p>
+  </div>
+
+  <section>
+    <h2><em>01</em>El context</h2>
+    <p>El Forn Jaume ven pa a bars i restaurants de Sabadell. Les comandes arriben per WhatsApp entre dijous i divendres. El dissabte a les cinc del matí, la llista la reconstrueix el Jaume de memòria.</p>
+  </section>
+
+  <section>
+    <h2><em>02</em>El problema</h2>
+    <p>Un missatge es perd i un bar es queda sense barra de pa. El Jaume no vol un altre xat. Vol una llista tancada el divendres a les vuit del vespre, i que el forn la vegi sense obrir el mòbil.</p>
+  </section>
+
+  <section>
+    <h2><em>03</em>Què ha de fer l'eina</h2>
+    <ul>
+      <li>El bar escriu la comanda al mateix WhatsApp d'ara.</li>
+      <li>El divendres a les 20:00 la llista es tanca sola.</li>
+      <li>Al forn, una pantalla mostra el pa de cada bar, en l'ordre de la ruta.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><em>04</em>Què queda fora</h2>
+    <table>
+      <thead>
+        <tr><th>Entra</th><th>No entra</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Comandes de pa per a bars</td><td>La venda al taulell</td></tr>
+        <tr><td>La llista del dissabte</td><td>Factures i cobraments</td></tr>
+        <tr><td>Un avís si un bar no ha escrit</td><td>Una app nova per als bars</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><em>05</em>Termini</h2>
+    <p>Tres setmanes des que tanquem aquest briefing. La primera setmana la llista ja es veu al forn, amb les comandes de prova. La tercera, el dissabte real surt d'aquí.</p>
+    <p>El preu és tancat i es diu a la proposta, abans de començar. Aquest briefing no el fixa.</p>
+  </section>
+
+  <section class="close">
+    <h2><em>06</em>El que cal decidir</h2>
+    <ul>
+      <li>Qui del forn mira la pantalla el dissabte.</li>
+      <li>A quina hora del divendres es tanca la llista, si no són les vuit.</li>
+      <li>Si un bar escriu tard, la comanda entra o es queda fora.</li>
+    </ul>
+  </section>
+
+  <!--
+    Tancament d'un contracte. Copia aquest bloc al lloc de l'últim <section>
+    i esborra'n l'exemple. El text de les clàusules el posa l'usuari.
+    <section class="close">
+      <h2><em>08</em>Com es tanca</h2>
+      <p>Dues firmes. El projecte comença quan hi són totes dues.</p>
+      <div class="signs">
+        <div>
+          <p><strong>Forn Jaume</strong></p>
+          <p>Nom, càrrec</p>
+          <p class="line">Signatura i data</p>
+        </div>
+        <div>
+          <p><strong>Clevier</strong></p>
+          <p>Nom, càrrec</p>
+          <p class="line">Signatura i data</p>
+        </div>
+      </div>
+    </section>
+  -->
+
+  <!--
+    Tancament d'un handoff. Mateixa regla: substitueix l'últim <section>.
+    <section class="close">
+      <h2><em>06</em>Accessos</h2>
+      <table>
+        <thead>
+          <tr><th>Què</th><th>On</th><th>Qui hi entra</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>L'eina</td><td>adreça</td><td>el client</td></tr>
+          <tr><td>El codi</td><td>repositori</td><td>Clevier</td></tr>
+        </tbody>
+      </table>
+      <p>Si una cosa falla, s'escriu a hello@clevier.ai.</p>
+    </section>
+  -->
+</td></tr></tbody>
+</table>
+</body>
+</html>
