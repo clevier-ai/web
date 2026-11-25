@@ -13,17 +13,14 @@ export default defineConfig({
         locales: {
           es: "es-ES",
           ca: "ca-ES",
+          en: "en-GB",
         },
       },
     }),
   ],
   redirects: {
-    "/en": "/",
     "/fr": "/",
     "/de": "/",
-    "/en/legal-notice": "/aviso-legal",
-    "/en/privacy": "/privacidad",
-    "/en/cookies": "/cookies",
     "/fr/mentions-legales": "/aviso-legal",
     "/fr/confidentialite": "/privacidad",
     "/fr/cookies": "/cookies",

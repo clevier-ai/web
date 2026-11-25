@@ -1,5 +1,30 @@
 ---
 import Home from "../components/Home.astro";
+
+// Solo esta ruta se resuelve en el servidor: redirige según el idioma del navegador.
+// "/?lang=es" fuerza castellano (lo usa el selector de idioma del pie).
+export const prerender = false;
+
+const supported = ["es", "ca", "en"];
+const forced = Astro.url.searchParams.get("lang");
+
+if (!forced) {
+  const preferred = (Astro.request.headers.get("accept-language") ?? "")
+    .split(",")
+    .map((part) => {
+      const [tag, q] = part.trim().split(";q=");
+      return { code: tag.toLowerCase().slice(0, 2), q: q ? Number(q) : 1 };
+    })
+    .filter((item) => item.code && item.q > 0)
+    .sort((a, b) => b.q - a.q)
+    .find((item) => supported.includes(item.code));
+
+  if (preferred && preferred.code !== "es") {
+    return Astro.redirect(`/${preferred.code}`, 302);
+  }
+}
+
+Astro.response.headers.set("Vary", "Accept-Language");
 ---
 
 <Home lang="es" />

@@ -1,4 +1,4 @@
-export const langs = ["es", "ca"] as const;
+export const langs = ["es", "ca", "en"] as const;
 export type Lang = (typeof langs)[number];
 export type LegalId = "notice" | "privacy" | "cookies";
 export type PageId = "home" | LegalId;
@@ -20,11 +20,18 @@ export const routes: Record<Lang, Record<PageId, string>> = {
     privacy: "/ca/privacitat",
     cookies: "/ca/cookies",
   },
+  en: {
+    home: "/en",
+    notice: "/en/legal-notice",
+    privacy: "/en/privacy",
+    cookies: "/en/cookies",
+  },
 };
 
 export const ogLocales: Record<Lang, string> = {
   es: "es_ES",
   ca: "ca_ES",
+  en: "en_GB",
 };
 
 export const linkedinHref = "https://www.linkedin.com/company/clevier";
@@ -52,7 +59,6 @@ type Home = {
   mailSubject: string;
   mailBody: string;
   close: string;
-  hintCta: string;
   languages: string;
   legalLabel: string;
   claim: [string, string];
@@ -67,11 +73,14 @@ type Home = {
   contactAfter: string;
   contactNeed: string;
   contactTitle: string;
+  consent: { text: string; accept: string; reject: string };
   form: {
     name: string;
     email: string;
     message: string;
     send: string;
+    company: string;
+    or: string;
     sending: string;
     ok: string;
     error: string;
@@ -190,7 +199,6 @@ export const copy = {
     mailSubject: "Consulta sobre un proceso",
     mailBody: "Empresa:\nProceso:\nHerramienta actual:\n",
     close: "Cerrar",
-    hintCta: "Leer en castellano",
     languages: "Idioma",
     legalLabel: "Legal",
     claim: ["Automatizamos el trabajo que se repite.", "En semanas, con el precio cerrado."],
@@ -258,14 +266,21 @@ export const copy = {
         extra: "Este tramo también tiene el precio cerrado, sin facturación por horas sueltas.",
       },
     ],
-    contactAfter: "Descríbenos el proceso. Antes de construir nada, te diremos si encaja y a qué precio.",
-    contactNeed: "Basta con la tarea que se repite, la herramienta que usáis ahora y quién la realiza.",
+    contactAfter: "Cuéntanos el proceso.",
+    contactNeed: "Te diremos si encaja y a qué precio, antes de construir nada.",
     contactTitle: "Contacto",
+    consent: {
+      text: "Solo usamos lo imprescindible. ¿Nos dejas medir las visitas de forma anónima?",
+      accept: "Aceptar",
+      reject: "Rechazar",
+    },
     form: {
       name: "Nombre",
+      company: "Empresa (opcional)",
       email: "Correo",
-      message: "Cuéntanos el proceso",
+      message: "La tarea, la herramienta actual y quién la realiza",
       send: "Enviar",
+      or: "O escríbenos directamente a",
       sending: "Enviando…",
       ok: "Recibido. Te respondemos en breve.",
       error: "No se ha podido enviar. Escríbenos a hola@clevier.ai.",
@@ -308,14 +323,14 @@ export const copy = {
         ],
         rows: ["Responsable", "Correo"],
         paras: [
-          "Si escribes a hola@clevier.ai, tratamos tu dirección, el contenido del mensaje y los datos técnicos que añade el correo, como la hora.",
-          "No hay formularios, cuentas ni analítica.",
+          "Si escribes a hola@clevier.ai o usas el formulario de contacto, tratamos tu nombre, tu dirección de correo, el contenido del mensaje y los datos técnicos que añade el correo, como la hora.",
+          "No hay cuentas ni analítica.",
           "El alojamiento puede guardar, por seguridad, la IP, el navegador y la hora de la visita. No los usamos para identificarte ni para publicidad.",
           "Para responderte y, si encaja, preparar una propuesta. Los registros técnicos sirven para mantener el sitio en pie.",
           "Si nos pides un proyecto, la base es la relación precontractual (artículo 6.1.b del RGPD). En los registros de seguridad, el interés legítimo de proteger el sitio (artículo 6.1.f).",
           "Los correos, hasta un año desde el último mensaje si no hay un proyecto. Si hay un encargo, durante la relación y los plazos legales que correspondan. Los registros de seguridad, el tiempo que fije el proveedor de alojamiento.",
-          "No vendemos datos ni los cedemos. Acceden el proveedor de correo y el de alojamiento, solo para prestar el servicio.",
-          "No transferimos datos por nuestra cuenta ni hacemos transferencias internacionales por iniciativa propia.",
+          "No vendemos datos ni los cedemos. Acceden el proveedor de correo, el de alojamiento y el servicio que entrega los mensajes del formulario (Resend), solo para prestar el servicio.",
+          "El servicio que entrega los mensajes del formulario (Resend) puede tratar datos fuera de la UE, con las garantías contractuales que ofrezca su proveedor.",
           "Puedes pedir acceso, rectificación, supresión, oposición, limitación y portabilidad en hola@clevier.ai. Respondemos en el plazo de un mes. También puedes reclamar ante la Agencia Española de Protección de Datos: aepd.es.",
           "Esta web no se dirige a menores de 14 años.",
           "Si esta política cambia, lo verás aquí, con la fecha nueva.",
@@ -328,7 +343,7 @@ export const copy = {
         heads: ["Qué es una cookie", "Qué usamos aquí", "Idioma", "Si esto cambia", "Cómo borrarlas"],
         paras: [
           "Un pequeño archivo que un sitio guarda en el navegador. Sirve, por ejemplo, para recordar una sesión.",
-          "Ninguna. Ni propia ni de terceros. No hay analítica, publicidad ni vídeos incrustados.",
+          "Ninguna. Ni propia ni de terceros. No hay analítica, publicidad ni vídeos incrustados. Solo guardamos en el navegador, sin cookie, tu respuesta al aviso de cookies.",
           "El idioma va en la dirección (por ejemplo, clevier.ai/ca). No guardamos una preferencia de idioma en el navegador.",
           "Si algún día usamos una cookie que no sea estrictamente necesaria, actualizaremos esta página antes y, cuando la ley lo exija, pediremos permiso.",
           "Desde la configuración del navegador puedes ver y borrar las cookies de cualquier sitio.",
@@ -346,7 +361,6 @@ export const copy = {
     mailSubject: "Consulta sobre un procés",
     mailBody: "Empresa:\nProcés:\nEina actual:\n",
     close: "Tanca",
-    hintCta: "Llegir en català",
     languages: "Idioma",
     legalLabel: "Legal",
     claim: ["Automatitzem la feina que es repeteix.", "En setmanes, amb el preu tancat."],
@@ -413,14 +427,21 @@ export const copy = {
         extra: "Aquest tram també té el preu tancat, sense facturació per hores soltes.",
       },
     ],
-    contactAfter: "Descriu-nos el procés. Abans de construir res, et direm si encaixa i a quin preu.",
-    contactNeed: "N'hi ha prou amb la tasca que es repeteix, l'eina que feu servir ara i qui la fa.",
+    contactAfter: "Explica'ns el procés.",
+    contactNeed: "Et direm si encaixa i a quin preu, abans de construir res.",
     contactTitle: "Contacte",
+    consent: {
+      text: "Només fem servir l'imprescindible. Ens deixes mesurar les visites de manera anònima?",
+      accept: "Acceptar",
+      reject: "Rebutjar",
+    },
     form: {
       name: "Nom",
+      company: "Empresa (opcional)",
       email: "Correu",
-      message: "Explica'ns el procés",
+      message: "La tasca, l'eina actual i qui la fa",
       send: "Enviar",
+      or: "O escriu-nos directament a",
       sending: "Enviant…",
       ok: "Rebut. Et responem aviat.",
       error: "No s'ha pogut enviar. Escriu-nos a hola@clevier.ai.",
@@ -463,14 +484,14 @@ export const copy = {
         ],
         rows: ["Responsable", "Correu"],
         paras: [
-          "Si escrius a hola@clevier.ai, tractem la teva adreça, el contingut del missatge i les dades tècniques que afegeix el correu, com l'hora.",
-          "No hi ha formularis, comptes ni analítica.",
+          "Si escrius a hola@clevier.ai o fas servir el formulari de contacte, tractem el teu nom, la teva adreça de correu, el contingut del missatge i les dades tècniques que afegeix el correu, com l'hora.",
+          "No hi ha comptes ni analítica.",
           "L'allotjament pot guardar, per seguretat, la IP, el navegador i l'hora de la visita. No les fem servir per identificar-te ni per a publicitat.",
           "Per respondre't i, si encaixa, preparar una proposta. Els registres tècnics serveixen per mantenir el web dret.",
           "Si ens demanes un projecte, la base és la relació precontractual (article 6.1.b del RGPD). En els registres de seguretat, l'interès legítim de protegir el web (article 6.1.f).",
           "Els correus, fins a un any des de l'últim missatge si no hi ha un projecte. Si hi ha un encàrrec, durant la relació i els terminis legals que corresponguin. Els registres de seguretat, el temps que fixi el proveïdor d'allotjament.",
-          "No venem dades ni les cedim. Hi accedeixen el proveïdor de correu i el d'allotjament, només per prestar el servei.",
-          "No transferim dades pel nostre compte ni fem transferències internacionals per iniciativa pròpia.",
+          "No venem dades ni les cedim. Hi accedeixen el proveïdor de correu, el d'allotjament i el servei que lliura els missatges del formulari (Resend), només per prestar el servei.",
+          "El servei que lliura els missatges del formulari (Resend) pot tractar dades fora de la UE, amb les garanties contractuals que ofereixi el seu proveïdor.",
           "Pots demanar accés, rectificació, supressió, oposició, limitació i portabilitat a hola@clevier.ai. Respondrem en el termini d'un mes. També pots reclamar davant l'Agència Espanyola de Protecció de Dades: aepd.es.",
           "Aquest web no es dirigeix a menors de 14 anys.",
           "Si aquesta política canvia, ho veuràs aquí, amb la data nova.",
@@ -483,10 +504,172 @@ export const copy = {
         heads: ["Què és una cookie", "Què fem servir", "Idioma", "Si això canvia", "Com esborrar-les"],
         paras: [
           "Un fitxer petit que un web desa al navegador. Serveix, per exemple, per recordar una sessió.",
-          "Cap. Ni pròpia ni de tercers. No hi ha analítica, publicitat ni vídeos incrustats.",
+          "Cap. Ni pròpia ni de tercers. No hi ha analítica, publicitat ni vídeos incrustats. Només desem al navegador, sense cookie, la teva resposta a l'avís de cookies.",
           "L'idioma va a l'adreça (per exemple, clevier.ai/ca). No desem una preferència d'idioma al navegador.",
           "Si algun dia fem servir una cookie que no sigui estrictament necessària, actualitzarem aquesta pàgina abans i, quan la llei ho exigeixi, demanarem permís.",
           "Des de la configuració del navegador pots veure i esborrar les cookies de qualsevol lloc.",
+        ],
+      }),
+    },
+  },
+  en: {
+    metaTitle: "Clevier — AI implementation for small and mid-sized businesses",
+    metaDescription:
+      "We automate the work that repeats. In weeks, with the price fixed before we start.",
+    skip: "Skip to content",
+    write: "Contact",
+    cta: "Ask about a process",
+    mailSubject: "Question about a process",
+    mailBody: "Company:\nProcess:\nCurrent tool:\n",
+    close: "Close",
+    languages: "Language",
+    legalLabel: "Legal",
+    claim: ["We automate the work that repeats.", "In weeks, with the price fixed."],
+    lede: "That task that repeats every week. The tool stays in your company.",
+    howLabel: "How we work",
+    howTitle: "How we work",
+    howIntro: "From the first conversation to the tool in production.",
+    steps: [
+      {
+        title: "You describe the process",
+        detail: "The task that repeats, the tool you use today and who does it every day.",
+        extra: "One task is enough to judge whether it makes sense. No dossier, and no need to gather the whole team for the first call.",
+      },
+      {
+        title: "We fix the price",
+        detail: "Before building anything. No hourly billing, no surprises.",
+        extra: "It is fixed by the scope of the work, not by hours spent. If the scope changes, we agree it again before going on.",
+      },
+      {
+        title: "You see it running",
+        detail: "In weeks, with a real case of yours. If something doesn't fit, it is fixed in that session, not in a document.",
+        extra: "The case is yours, with your data. What doesn't fit is adjusted right there.",
+      },
+      {
+        title: "It joins the daily routine",
+        detail: "It becomes part of the usual work of the person who does it.",
+        extra: "From then on, whoever does the task uses it every day. Whoever decides knows what is happening.",
+      },
+    ],
+    workTitle: "What we do",
+    workLine: "Implementation, training, diagnosis and maintenance. Always on a real process.",
+    services: [
+      {
+        id: "implantacion",
+        name: "Implementation",
+        meta: "In weeks",
+        more: "The tool plugs into a process that already exists.",
+        detail:
+          "It is built on top of email, a spreadsheet or your management software. There is no new system to learn.",
+        extra:
+          "In a few weeks you try it with a case of your own. What doesn't fit is fixed in that phase.",
+      },
+      {
+        id: "formacion",
+        name: "AI training",
+        meta: "Team and management",
+        more: "Whoever does the work and whoever decides leave knowing how to use it.",
+        detail: "Practice is done with your own process, not with a generic example.",
+        extra: "Whoever decides leaves knowing what the tool does on its own and what stays in a person's hands.",
+      },
+      {
+        id: "rayos",
+        name: "X-ray",
+        meta: "Where to start",
+        more: "A short list of where to start.",
+        detail: "What to automate first, what to keep and what AI doesn't solve.",
+        extra: "If it doesn't fit, we tell you in that session. It is not a long report.",
+      },
+      {
+        id: "gestionada",
+        name: "Managed AI",
+        meta: "After launch",
+        more: "Once it works, we carry on.",
+        detail: "What fails is fixed and new cases are added.",
+        extra: "This stage also has a fixed price, with no scattered hourly billing.",
+      },
+    ],
+    contactAfter: "Tell us about the process.",
+    contactNeed: "We'll tell you whether it fits, and at what price, before building anything.",
+    contactTitle: "Contact",
+    consent: {
+      text: "We only use what is essential. May we measure visits anonymously?",
+      accept: "Accept",
+      reject: "Reject",
+    },
+    form: {
+      name: "Name",
+      company: "Company (optional)",
+      email: "Email",
+      message: "The task, your current tool and who does it",
+      send: "Send",
+      or: "Or write to us directly at",
+      sending: "Sending…",
+      ok: "Received. We'll reply shortly.",
+      error: "It could not be sent. Write to us at hola@clevier.ai.",
+    },
+    linkedin: "LinkedIn",
+    notFoundTitle: "Page not found — Clevier",
+    notFoundClaim: "This page doesn't exist.",
+    notFoundLede: "The link is wrong or the page has moved. Go back to the start, or write to us if you were looking for a process.",
+    notFoundHome: "Back to home",
+    legalNav: { notice: "Legal notice", privacy: "Privacy", cookies: "Cookies" },
+    legal: {
+      notice: notice("en", {
+        title: "Legal notice — Clevier",
+        description: "Owner, contact and terms of use of clevier.ai.",
+        updated: "November 2026",
+        heads: ["Owner", "What this website is", "Intellectual property", "Liability", "Governing law"],
+        rows: ["Owner", "Email", "Website"],
+        activity:
+          "It presents Clevier. We implement technology and AI in small and mid-sized businesses: we get it running and the team uses it. There is no shop and no automatic contracting.",
+        ip: "The texts, the brand, the logo and the symbol belong to Clevier. Do not use or copy them without written permission.",
+        liability:
+          "The information is general and may change. It is not an offer or a commitment to results. If we link to a third-party site, that site has its own owner.",
+        law: "Spanish law applies. For any question, write to hola@clevier.ai.",
+      }),
+      privacy: privacy("en", {
+        title: "Privacy — Clevier",
+        description: "What data Clevier processes, why, and how to exercise your rights.",
+        updated: "November 2026",
+        heads: [
+          "Controller",
+          "What data there is",
+          "Why",
+          "Legal basis",
+          "How long",
+          "Who has access",
+          "Outside the EU",
+          "Your rights",
+          "Minors",
+          "Changes",
+        ],
+        rows: ["Controller", "Email"],
+        paras: [
+          "If you write to hola@clevier.ai or use the contact form, we process your name, your email address, the content of the message and the technical data the email adds, such as the time.",
+          "There are no accounts or analytics.",
+          "For security, hosting may store the IP address, browser and time of the visit. We do not use them to identify you or for advertising.",
+          "To reply to you and, if it fits, prepare a proposal. Technical logs are used to keep the site running.",
+          "If you ask us for a project, the basis is the pre-contractual relationship (article 6.1.b GDPR). For security logs, the legitimate interest in protecting the site (article 6.1.f).",
+          "Emails, up to one year after the last message if there is no project. If there is an engagement, for the duration of the relationship and the applicable legal periods. Security logs, for the time set by the hosting provider.",
+          "We do not sell or share data. The email provider, the hosting provider and the service that delivers the form messages (Resend) have access, only to provide the service.",
+          "The service that delivers the form messages (Resend) may process data outside the EU, under the contractual safeguards its provider offers.",
+          "You can request access, rectification, erasure, objection, restriction and portability at hola@clevier.ai. We reply within one month. You can also lodge a complaint with the Spanish Data Protection Agency: aepd.es.",
+          "This website is not aimed at children under 14.",
+          "If this policy changes, you will see it here, with the new date.",
+        ],
+      }),
+      cookies: cookies({
+        title: "Cookies — Clevier",
+        description: "clevier.ai does not use cookies.",
+        updated: "November 2026",
+        heads: ["What a cookie is", "What we use here", "Language", "If this changes", "How to delete them"],
+        paras: [
+          "A small file that a site saves in the browser. It is used, for example, to remember a session.",
+          "None. Neither our own nor third-party. There are no analytics, advertising or embedded videos. We only store in the browser, without a cookie, your answer to the cookie notice.",
+          "The language is part of the address (for example, clevier.ai/en). We do not store a language preference in the browser.",
+          "If one day we use a cookie that is not strictly necessary, we will update this page first and, where the law requires it, ask for permission.",
+          "From your browser settings you can see and delete the cookies of any site.",
         ],
       }),
     },

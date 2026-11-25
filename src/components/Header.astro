@@ -24,10 +24,10 @@ const contactHref = to("contacto");
     </a>
     <details class="menu">
       <summary>
-        <span class="menu__label">Menú</span>
+        <span class="menu__label">{lang === "en" ? "Menu" : "Menú"}</span>
         <span class="menu__close">{t.close}</span>
       </summary>
-      <nav class="menu__panel" aria-label={lang === "ca" ? "Seccions" : "Secciones"}>
+      <nav class="menu__panel" aria-label={lang === "ca" ? "Seccions" : lang === "en" ? "Sections" : "Secciones"}>
         {
           sections.map((item) => (
             <a href={item.href}>{item.label}</a>

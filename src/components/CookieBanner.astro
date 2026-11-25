@@ -1,0 +1,111 @@
+---
+import { copy, type Lang } from "../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const t = copy[Astro.props.lang].consent;
+---
+
+<div class="consent" data-consent hidden role="region" aria-label="Cookies">
+  <p>{t.text}</p>
+  <div class="consent__acciones">
+    <button type="button" class="consent__btn" data-consent-choice="rejected">{t.reject}</button>
+    <button type="button" class="consent__btn consent__btn--si" data-consent-choice="accepted">{t.accept}</button>
+  </div>
+</div>
+
+<script>
+  // La elección se guarda en localStorage (no es una cookie) y se anuncia con un evento,
+  // para que una futura analítica solo arranque si el valor es "accepted".
+  const KEY = "clv-consent";
+  const banner = document.querySelector<HTMLElement>("[data-consent]");
+
+  function read(): string | null {
+    try {
+      return localStorage.getItem(KEY);
+    } catch {
+      return null;
+    }
+  }
+
+  if (banner) {
+    if (!read()) banner.hidden = false;
+    banner.querySelectorAll<HTMLButtonElement>("[data-consent-choice]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const choice = btn.dataset.consentChoice ?? "rejected";
+        try {
+          localStorage.setItem(KEY, choice);
+        } catch {
+          /* ignore */
+        }
+        banner.hidden = true;
+        window.dispatchEvent(new CustomEvent("clv:consent", { detail: choice }));
+      });
+    });
+  }
+</script>
+
+<style>
+  .consent {
+    position: fixed;
+    z-index: 50;
+    inset: auto 12px 12px 12px;
+    display: grid;
+    gap: 0.75rem;
+    max-width: 26rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--clv-glass-border);
+    border-radius: var(--clv-radius);
+    background: var(--clv-glass), rgba(247, 246, 242, 0.6);
+    backdrop-filter: blur(22px) saturate(1.7);
+    -webkit-backdrop-filter: blur(22px) saturate(1.7);
+    box-shadow: 0 12px 32px -16px rgba(26, 28, 30, 0.35);
+    font: var(--clv-text-small);
+  }
+
+  .consent[hidden] { display: none; }
+
+  .consent p { color: var(--clv-text); }
+
+  .consent__acciones {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .consent__btn {
+    min-height: 40px;
+    padding: 0 1rem;
+    border: 1px solid var(--clv-border);
+    border-radius: var(--clv-radius);
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--clv-text);
+    font: 600 14px/1 var(--clv-font-body);
+    cursor: pointer;
+    transition: background-color var(--dur-1) var(--ease-std);
+  }
+
+  .consent__btn:hover { background: var(--clv-blanc); }
+
+  .consent__btn--si {
+    border-color: transparent;
+    background: var(--clv-cta-bg);
+    color: var(--clv-cta-text);
+  }
+
+  .consent__btn--si:hover { background: var(--clv-cta-hover); }
+
+  .consent__btn:focus-visible {
+    outline: 2px solid var(--clv-text);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 720px) {
+    .consent { inset: auto auto 20px 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .consent__btn { transition: none; }
+  }
+</style>

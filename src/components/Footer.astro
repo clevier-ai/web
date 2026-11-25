@@ -15,29 +15,12 @@ const legal = (["notice", "privacy", "cookies"] as const).map((id) => ({
   href: routes[lang][id],
   label: t.legalNav[id],
 }));
-const hintOptions = langs.map((code) => ({
-  code,
-  href: routes[code][page],
-  label: copy[code].hintCta,
-}));
+// "/?lang=es" evita la redirección automática por idioma del navegador.
+const hrefFor = (code: Lang) => (code === "es" && page === "home" ? "/?lang=es" : routes[code][page]);
 ---
 
 <footer class="footer">
   <div class="wrap footer__inner">
-    <div class="hint" data-hint data-current={lang} data-options={JSON.stringify(hintOptions)} hidden>
-      <a class="enlace" data-hint-link href={routes[lang].home}></a>
-      <button class="hint__close" type="button" data-hint-close aria-label={t.close}>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path
-            d="M6 6l12 12M18 6L6 18"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"></path>
-        </svg>
-      </button>
-    </div>
-
     <a class="footer-brand" href={routes[lang].home} aria-label="Clevier">
       <img src="/brand/cl-angle-67deg.svg" alt="" width="28" height="24" />
       <span>evier</span>
@@ -52,7 +35,7 @@ const hintOptions = langs.map((code) => ({
                 {code.toUpperCase()}
               </span>
             ) : (
-              <a class="enlace" href={routes[code][page]} hreflang={code} lang={code}>
+              <a class="enlace" href={hrefFor(code)} hreflang={code} lang={code}>
                 {code.toUpperCase()}
               </a>
             ),
@@ -70,50 +53,9 @@ const hintOptions = langs.map((code) => ({
         ))
       }
     </nav>
-    <p class="copy">© {year} Clevier</p>
+    <p class="copy">© {year} Clevier · Barcelona</p>
   </div>
 </footer>
-
-<script>
-  const hint = document.querySelector("[data-hint]");
-
-  if (hint instanceof HTMLElement) {
-    hint.querySelector("[data-hint-close]")?.addEventListener("click", () => {
-      hint.hidden = true;
-      try {
-        sessionStorage.setItem("clv-lang-hint", "1");
-      } catch {
-        /* ignore */
-      }
-    });
-
-    let dismissed = false;
-    try {
-      dismissed = sessionStorage.getItem("clv-lang-hint") === "1";
-    } catch {
-      dismissed = true;
-    }
-
-    if (!dismissed) {
-      const code = navigator.language.toLowerCase().slice(0, 2);
-      let options: { code: string; href: string; label: string }[] = [];
-      try {
-        options = JSON.parse(hint.dataset.options || "[]");
-      } catch {
-        options = [];
-      }
-      const match = options.find((item) => item.code === code);
-      const link = hint.querySelector("[data-hint-link]");
-      if (match && match.code !== hint.dataset.current && link instanceof HTMLAnchorElement) {
-        link.href = match.href;
-        link.textContent = match.label;
-        link.lang = match.code;
-        link.hreflang = match.code;
-        hint.hidden = false;
-      }
-    }
-  }
-</script>
 
 <style>
   .footer {
@@ -149,35 +91,6 @@ const hintOptions = langs.map((code) => ({
     font-variation-settings: "SOFT" 30, "opsz" 20, "wght" 700;
     letter-spacing: var(--clv-lockup-tracking);
     line-height: 1;
-  }
-
-  .hint {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    min-height: 44px;
-  }
-
-  .hint[hidden] {
-    display: none;
-  }
-
-  .hint a {
-    font: 600 14px/1.4 var(--clv-font-body);
-  }
-
-  .hint__close {
-    width: 44px;
-    height: 44px;
-    display: grid;
-    place-items: center;
-    flex: none;
-  }
-
-  .hint__close svg {
-    width: 16px;
-    height: 16px;
   }
 
   .footlinks {
@@ -269,8 +182,7 @@ const hintOptions = langs.map((code) => ({
 
   @media (prefers-reduced-motion: reduce) {
     .langs a,
-    .legal a,
-    .hint a {
+    .legal a {
       transition: none;
     }
   }

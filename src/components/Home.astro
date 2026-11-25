@@ -38,7 +38,6 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
                 <div>
                   <h3>{step.title}</h3>
                   <p class="paso__detail">{step.detail}</p>
-                  <p class="paso__extra">{step.extra}</p>
                 </div>
               </li>
             ))
@@ -79,23 +78,26 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
     </section>
 
     <section class="bloque cierre" id="contacto" aria-labelledby="contact-title">
-      <div class="wrap">
-        <h2 id="contact-title">
-          <a class="mail enlace" href={mail}>hola@clevier.ai</a>
-        </h2>
-        <p class="cierre__linea">{t.contactAfter}</p>
-        <p class="cierre__linea">{t.contactNeed}</p>
+      <div class="wrap cierre__grid">
+        <div class="cierre__texto">
+          <p class="cierre__etiqueta">{t.contactTitle}</p>
+          <h2 id="contact-title">{t.contactAfter}</h2>
+          <p class="cierre__linea">{t.contactNeed}</p>
+        </div>
+
         <form class="form" method="post" action="/api/contact" data-form data-sending={t.form.sending} data-ok={t.form.ok} data-error={t.form.error}>
-          <div class="form__row">
-            <label>
-              <span>{t.form.name}</span>
-              <input name="name" type="text" autocomplete="name" required maxlength="120" />
-            </label>
-            <label>
-              <span>{t.form.email}</span>
-              <input name="email" type="email" autocomplete="email" required maxlength="200" />
-            </label>
-          </div>
+          <label>
+            <span>{t.form.name}</span>
+            <input name="name" type="text" autocomplete="name" required maxlength="120" />
+          </label>
+          <label>
+            <span>{t.form.email}</span>
+            <input name="email" type="email" autocomplete="email" required maxlength="200" />
+          </label>
+          <label>
+            <span>{t.form.company}</span>
+            <input name="company" type="text" autocomplete="organization" maxlength="160" />
+          </label>
           <label>
             <span>{t.form.message}</span>
             <textarea name="message" rows="5" required maxlength="5000"></textarea>
@@ -107,6 +109,11 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
             <p class="form__status" role="status" aria-live="polite"></p>
           </div>
         </form>
+
+        <p class="cierre__mail">
+          <span>{t.form.or}</span>
+          <a class="mail enlace" href={mail}>hola@clevier.ai</a>
+        </p>
       </div>
     </section>
   </div>
@@ -226,11 +233,6 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
     color: var(--clv-text-secondary);
   }
 
-  .paso__extra {
-    margin-top: 0.45rem;
-    color: var(--clv-text);
-  }
-
   .filas--resto li { grid-template-columns: minmax(0, 1fr); }
 
   .abre { min-width: 0; }
@@ -334,40 +336,62 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
 
   .intro { max-width: 62ch; margin-top: 0.85rem; }
 
-  .cierre__linea {
-    max-width: 42rem;
-    margin-top: 1rem;
+  .cierre__grid {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
   }
 
-  .cierre__linea + .cierre__linea { margin-top: 0.4rem; }
+  .cierre__etiqueta {
+    margin-bottom: 0.85rem;
+    color: var(--clv-text-secondary);
+    font: var(--clv-text-label);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
 
-  .cierre h2 { max-width: none; }
+  .cierre h2 { max-width: 16em; }
+
+  .cierre__linea {
+    max-width: 34rem;
+    margin-top: 1.1rem;
+    color: var(--clv-text-secondary);
+  }
+
+  .cierre__mail {
+    display: grid;
+    gap: 0.35rem;
+    align-content: start;
+  }
+
+  .cierre__mail span {
+    color: var(--clv-text-secondary);
+    font: var(--clv-text-label);
+    letter-spacing: 0.06em;
+  }
 
   .mail {
-    font: 700 clamp(2rem, 1rem + 3vw, 3.5rem) / 1.05 var(--clv-font-display);
-    font-variation-settings: var(--clv-display-vars);
-    letter-spacing: -0.035em;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.08em;
+    font: 600 clamp(1.5rem, 1rem + 1.6vw, 2.1rem) / 1.1 var(--clv-font-display);
+    font-variation-settings: var(--clv-heading-vars);
+    letter-spacing: -0.025em;
     overflow-wrap: anywhere;
   }
 
   .form {
     display: grid;
-    gap: 1rem;
-    max-width: 42rem;
-    margin-top: 2rem;
-  }
-
-  .form__row {
-    display: grid;
-    gap: 1rem;
+    gap: 1.1rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--clv-glass-border);
+    border-radius: calc(var(--clv-radius) * 1.5);
+    background: var(--clv-glass);
+    backdrop-filter: blur(22px) saturate(1.7);
+    -webkit-backdrop-filter: blur(22px) saturate(1.7);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 18px 40px -24px rgba(26, 28, 30, 0.25);
   }
 
   .form label {
     display: grid;
-    gap: 0.35rem;
+    gap: 0.4rem;
   }
 
   .form label span {
@@ -379,19 +403,27 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
   .form input:not([type="hidden"]),
   .form textarea {
     width: 100%;
-    padding: 0.75rem 0.9rem;
+    padding: 0.8rem 0.95rem;
     border: 1px solid var(--clv-border);
     border-radius: var(--clv-radius);
-    background: var(--clv-surface);
+    background: rgba(255, 255, 255, 0.85);
     color: var(--clv-text);
     font: var(--clv-text-body);
     resize: vertical;
+    transition: border-color var(--dur-1) var(--ease-std), background-color var(--dur-1) var(--ease-std);
+  }
+
+  .form input:hover,
+  .form textarea:hover {
+    border-color: var(--clv-text-secondary);
   }
 
   .form input:focus-visible,
   .form textarea:focus-visible {
-    outline: 2px solid var(--clv-text);
-    outline-offset: 1px;
+    outline: none;
+    border-color: var(--clv-text);
+    background: var(--clv-blanc);
+    box-shadow: 0 0 0 3px rgba(47, 191, 113, 0.28);
   }
 
   .form__trap {
@@ -404,15 +436,26 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
     flex-wrap: wrap;
     align-items: center;
     gap: 0.75rem 1.25rem;
+    margin-top: 0.25rem;
   }
 
-  .form__foot .btn { cursor: pointer; border: 0; }
+  .form__foot .btn { cursor: pointer; border: 0; min-width: 9rem; }
   .form__foot .btn:disabled { opacity: 0.6; cursor: default; }
   .form__status { margin: 0; font-size: 1rem; }
   .form__status[data-state="error"] { color: var(--clv-error); }
 
-  @media (min-width: 640px) {
-    .form__row { grid-template-columns: 1fr 1fr; }
+  @media (min-width: 900px) {
+    .cierre__grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      grid-template-areas:
+        "texto form"
+        "mail form";
+      column-gap: clamp(2.5rem, 6vw, 5rem);
+      row-gap: 2.5rem;
+    }
+    .cierre__texto { grid-area: texto; }
+    .form { grid-area: form; }
+    .cierre__mail { grid-area: mail; align-self: end; }
   }
 
   #como, #trabajo, #contacto { scroll-margin-top: 5.5rem; }
@@ -525,18 +568,8 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
     }
 
     .cierre__linea {
-      margin-top: 1.15rem;
       font-size: 1.05rem;
       line-height: 1.55;
-    }
-
-    .cierre__linea + .cierre__linea {
-      margin-top: 0.65rem;
-    }
-
-    .mail {
-      font-size: clamp(1.65rem, 1rem + 3.5vw, 2.15rem);
-      line-height: 1.12;
     }
 
     #como,

@@ -19,6 +19,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   const name = get("name").slice(0, 120);
   const email = get("email").slice(0, 200);
+  const company = get("company").slice(0, 160);
   const message = get("message").slice(0, 5000);
 
   if (!name || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -35,9 +36,9 @@ export const POST: APIRoute = async ({ request }) => {
       from: FROM,
       to: TO,
       reply_to: email,
-      subject: `Contacto web: ${name}`,
-      text: `Nombre: ${name}\nCorreo: ${email}\n\n${message}`,
-      html: `<p><b>Nombre:</b> ${esc(name)}<br><b>Correo:</b> ${esc(email)}</p><p>${esc(message).replace(/\n/g, "<br>")}</p>`,
+      subject: `Contacto web: ${name}${company ? ` (${company})` : ""}`,
+      text: `Nombre: ${name}\nCorreo: ${email}\n${company ? `Empresa: ${company}\n` : ""}\n${message}`,
+      html: `<p><b>Nombre:</b> ${esc(name)}<br><b>Correo:</b> ${esc(email)}${company ? `<br><b>Empresa:</b> ${esc(company)}` : ""}</p><p>${esc(message).replace(/\n/g, "<br>")}</p>`,
     }),
   });
 

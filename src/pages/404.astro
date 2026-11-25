@@ -2,10 +2,15 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { copy, routes, type Lang } from "../i18n/ui";
 
-/** Prefer Catalan if the path or Accept-Language points there. */
+/** Pick the language from the path, or from Accept-Language. */
 const accept = Astro.request.headers.get("accept-language")?.toLowerCase() ?? "";
-const fromPath = Astro.url.pathname.startsWith("/ca");
-const lang: Lang = fromPath || accept.startsWith("ca") ? "ca" : "es";
+const path = Astro.url.pathname;
+const lang: Lang =
+  path.startsWith("/ca") || (!path.startsWith("/en") && accept.startsWith("ca"))
+    ? "ca"
+    : path.startsWith("/en") || accept.startsWith("en")
+      ? "en"
+      : "es";
 const t = copy[lang];
 const home = routes[lang].home;
 const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)}&body=${encodeURIComponent(t.mailBody)}`;
