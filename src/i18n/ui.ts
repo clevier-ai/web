@@ -67,6 +67,15 @@ type Home = {
   contactAfter: string;
   contactNeed: string;
   contactTitle: string;
+  form: {
+    name: string;
+    email: string;
+    message: string;
+    send: string;
+    sending: string;
+    ok: string;
+    error: string;
+  };
   linkedin: string;
   notFoundTitle: string;
   notFoundClaim: string;
@@ -252,6 +261,15 @@ export const copy = {
     contactAfter: "Descríbenos el proceso. Antes de construir nada, te diremos si encaja y a qué precio.",
     contactNeed: "Basta con la tarea que se repite, la herramienta que usáis ahora y quién la realiza.",
     contactTitle: "Contacto",
+    form: {
+      name: "Nombre",
+      email: "Correo",
+      message: "Cuéntanos el proceso",
+      send: "Enviar",
+      sending: "Enviando…",
+      ok: "Recibido. Te respondemos en breve.",
+      error: "No se ha podido enviar. Escríbenos a hola@clevier.ai.",
+    },
     linkedin: "LinkedIn",
     notFoundTitle: "Página no encontrada — Clevier",
     notFoundClaim: "Esta página no existe.",
@@ -398,6 +416,15 @@ export const copy = {
     contactAfter: "Descriu-nos el procés. Abans de construir res, et direm si encaixa i a quin preu.",
     contactNeed: "N'hi ha prou amb la tasca que es repeteix, l'eina que feu servir ara i qui la fa.",
     contactTitle: "Contacte",
+    form: {
+      name: "Nom",
+      email: "Correu",
+      message: "Explica'ns el procés",
+      send: "Enviar",
+      sending: "Enviant…",
+      ok: "Rebut. Et responem aviat.",
+      error: "No s'ha pogut enviar. Escriu-nos a hola@clevier.ai.",
+    },
     linkedin: "LinkedIn",
     notFoundTitle: "Pàgina no trobada — Clevier",
     notFoundClaim: "Aquesta pàgina no existeix.",

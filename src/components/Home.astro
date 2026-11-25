@@ -85,6 +85,28 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
         </h2>
         <p class="cierre__linea">{t.contactAfter}</p>
         <p class="cierre__linea">{t.contactNeed}</p>
+        <form class="form" method="post" action="/api/contact" data-form data-sending={t.form.sending} data-ok={t.form.ok} data-error={t.form.error}>
+          <div class="form__row">
+            <label>
+              <span>{t.form.name}</span>
+              <input name="name" type="text" autocomplete="name" required maxlength="120" />
+            </label>
+            <label>
+              <span>{t.form.email}</span>
+              <input name="email" type="email" autocomplete="email" required maxlength="200" />
+            </label>
+          </div>
+          <label>
+            <span>{t.form.message}</span>
+            <textarea name="message" rows="5" required maxlength="5000"></textarea>
+          </label>
+          <input class="form__trap" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <input type="hidden" name="lang" value={lang} />
+          <div class="form__foot">
+            <button class="btn" type="submit">{t.form.send}</button>
+            <p class="form__status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
       </div>
     </section>
   </div>
@@ -331,6 +353,68 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
     overflow-wrap: anywhere;
   }
 
+  .form {
+    display: grid;
+    gap: 1rem;
+    max-width: 42rem;
+    margin-top: 2rem;
+  }
+
+  .form__row {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .form label {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .form label span {
+    color: var(--clv-text-secondary);
+    font: var(--clv-text-label);
+    letter-spacing: 0.06em;
+  }
+
+  .form input:not([type="hidden"]),
+  .form textarea {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--clv-border);
+    border-radius: var(--clv-radius);
+    background: var(--clv-surface);
+    color: var(--clv-text);
+    font: var(--clv-text-body);
+    resize: vertical;
+  }
+
+  .form input:focus-visible,
+  .form textarea:focus-visible {
+    outline: 2px solid var(--clv-text);
+    outline-offset: 1px;
+  }
+
+  .form__trap {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .form__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+  }
+
+  .form__foot .btn { cursor: pointer; border: 0; }
+  .form__foot .btn:disabled { opacity: 0.6; cursor: default; }
+  .form__status { margin: 0; font-size: 1rem; }
+  .form__status[data-state="error"] { color: var(--clv-error); }
+
+  @media (min-width: 640px) {
+    .form__row { grid-template-columns: 1fr 1fr; }
+  }
+
   #como, #trabajo, #contacto { scroll-margin-top: 5.5rem; }
 
   .filas li:not(:has(.meta)) {
@@ -508,6 +592,29 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
 </style>
 
 <script>
+  const form = document.querySelector<HTMLFormElement>("[data-form]");
+  if (form) {
+    const status = form.querySelector<HTMLElement>(".form__status")!;
+    const button = form.querySelector<HTMLButtonElement>("button")!;
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      status.dataset.state = "";
+      status.textContent = form.dataset.sending ?? "";
+      try {
+        const res = await fetch(form.action, { method: "POST", body: new FormData(form) });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.textContent = form.dataset.ok ?? "";
+      } catch {
+        status.dataset.state = "error";
+        status.textContent = form.dataset.error ?? "";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
   document.querySelectorAll("#trabajo details.abre").forEach((el) => {
     el.addEventListener("toggle", () => {
       if (!(el instanceof HTMLDetailsElement) || !el.open) return;
