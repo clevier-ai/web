@@ -187,6 +187,13 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.18em;
+    text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
+    transition: text-decoration-color var(--dur-1) var(--ease-std);
+  }
+
+  .salto:hover,
+  .salto:focus-visible {
+    text-decoration-color: currentColor;
   }
 
   .bloque { padding-block: clamp(3.25rem, 6vw, 5.25rem); }
@@ -243,7 +250,6 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
     justify-content: space-between;
     gap: 1rem;
     list-style: none;
-    cursor: pointer;
   }
 
   .filas--resto .abre summary {
@@ -314,6 +320,89 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
 
   .abre[open] .abre__icon {
     transform: rotate(45deg);
+  }
+
+  /* Fila resaltada al pasar el ratón: cristal muy suave y redondeado */
+  .filas--resto li {
+    border-radius: 22px;
+    transition:
+      background-color var(--dur-2) var(--ease-out),
+      box-shadow var(--dur-2) var(--ease-out),
+      border-color var(--dur-2) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .filas--resto li:hover,
+    .filas--resto li:has(summary:focus-visible) {
+      border-top-color: transparent;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.12));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 8px 24px -22px rgba(26, 28, 30, 0.25);
+    }
+
+    .filas--resto li:hover + li,
+    .filas--resto li:has(summary:focus-visible) + li {
+      border-top-color: transparent;
+    }
+
+    .filas--resto li:last-child:hover {
+      border-bottom-color: transparent;
+    }
+  }
+
+  @media (min-width: 800px) {
+    .filas--resto li:has(.abre[open]) {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
+    }
+  }
+
+  /* Apertura suave: la altura y el texto entran con el mismo easing que los botones */
+  .abre {
+    interpolate-size: allow-keywords;
+  }
+
+  .abre::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size var(--dur-3) var(--ease-out),
+      content-visibility var(--dur-3) allow-discrete;
+  }
+
+  .abre[open]::details-content {
+    block-size: auto;
+  }
+
+  .abre__cuerpo {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity var(--dur-2) var(--ease-out),
+      transform var(--dur-3) var(--ease-out);
+  }
+
+  .abre[open] .abre__cuerpo {
+    opacity: 1;
+    transform: none;
+    transition-delay: 60ms;
+  }
+
+  @starting-style {
+    .abre[open] .abre__cuerpo {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  .abre summary h3 {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: transparent;
+    transition: text-decoration-color var(--dur-1) var(--ease-std);
+  }
+
+  .abre summary:hover h3 {
+    text-decoration-color: currentColor;
   }
 
   .abre summary:hover .abre__mas,
@@ -439,7 +528,7 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
     margin-top: 0.25rem;
   }
 
-  .form__foot .btn { cursor: pointer; border: 0; min-width: 9rem; }
+  .form__foot .btn { border: 0; min-width: 9rem; }
   .form__foot .btn:disabled { opacity: 0.6; cursor: default; }
   .form__status { margin: 0; font-size: 1rem; }
   .form__status[data-state="error"] { color: var(--clv-error); }
@@ -611,7 +700,10 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .abre__icon {
+    .abre__icon,
+    .abre::details-content,
+    .abre__cuerpo,
+    .filas--resto li {
       transition: none;
     }
 

@@ -87,6 +87,13 @@ const mail = `mailto:hola@clevier.ai?subject=${encodeURIComponent(t.mailSubject)
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.18em;
+    text-decoration-color: color-mix(in srgb, currentColor 55%, transparent);
+    transition: text-decoration-color var(--dur-1) var(--ease-std);
+  }
+
+  .salto:hover,
+  .salto:focus-visible {
+    text-decoration-color: currentColor;
   }
 
   @media (max-width: 799px) {

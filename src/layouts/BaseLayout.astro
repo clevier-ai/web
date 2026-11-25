@@ -16,7 +16,7 @@ const { lang, page, title, description } = Astro.props;
 const t = copy[lang];
 const site = Astro.site ?? new URL("https://clevier.ai");
 const canonical = new URL(routes[lang][page], site).href;
-const ogImage = new URL(lang === "ca" ? "/og-ca.png" : "/og.png", site).href;
+const ogImage = new URL(lang === "ca" ? "/og-ca.png" : lang === "en" ? "/og-en.png" : "/og.png", site).href;
 const organization = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",

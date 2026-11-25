@@ -86,7 +86,8 @@ const contactHref = to("contacto");
     color: var(--clv-text);
   }
 
-  .brand:hover .brand-logo {
+  .brand:hover .brand-logo,
+  .brand:hover .brand-suffix {
     transform: translateY(-2px);
   }
 
@@ -109,6 +110,7 @@ const contactHref = to("contacto");
     color: var(--clv-text);
     line-height: 1;
     transform: translateY(-1px);
+    transition: transform var(--dur-2) var(--ease-out);
   }
 
   .header__cta {
@@ -129,6 +131,12 @@ const contactHref = to("contacto");
     font: 600 15px/1 var(--clv-font-display);
     font-variation-settings: var(--clv-heading-vars);
     list-style: none;
+    border-radius: var(--clv-radius-pill);
+    transition: background-color var(--dur-1) var(--ease-std);
+  }
+
+  .menu summary:hover {
+    background: rgba(26, 28, 30, 0.06);
   }
 
   .menu summary::-webkit-details-marker {
@@ -292,7 +300,8 @@ const contactHref = to("contacto");
       animation: none;
     }
 
-    .brand-logo {
+    .brand-logo,
+    .brand-suffix {
       transition: none;
     }
   }

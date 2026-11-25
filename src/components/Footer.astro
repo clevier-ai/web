@@ -77,6 +77,16 @@ const hrefFor = (code: Lang) => (code === "es" && page === "home" ? "/?lang=es" 
     color: var(--clv-text);
   }
 
+  .footer-brand img,
+  .footer-brand span {
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+
+  .footer-brand:hover img,
+  .footer-brand:hover span {
+    transform: translateY(-2px);
+  }
+
   .footer-brand img {
     height: 1.15em;
     width: auto;
