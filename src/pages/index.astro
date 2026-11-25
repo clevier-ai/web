@@ -28,3 +28,12 @@ Astro.response.headers.set("Vary", "Accept-Language");
 ---
 
 <Home lang="es" />
+
+{
+  forced && (
+    <script is:inline>
+      /* Deja la barra de direcciones limpia: "/?lang=es" → "/" */
+      history.replaceState(null, "", location.pathname + location.hash);
+    </script>
+  )
+}
